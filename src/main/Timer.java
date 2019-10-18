@@ -9,6 +9,7 @@ public class Timer {
 	 */
 	public Timer(int duration) {
 		frames()[1] = duration;
+		frames()[0] = duration;
 	}
 	
 	/**

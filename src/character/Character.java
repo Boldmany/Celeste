@@ -3,19 +3,21 @@ package character;
 import main.Vector;
 
 public class Character {
-	private Vector vector = new Vector(0,0);
+	private Vector coord = new Vector(0,0);
 	private Vector changeHitBox = new Vector(0,0);
-	private Vector visibleVector = new Vector(0,0);
+	private Vector visibleCoord = new Vector(0,0);
+	private Vector speed = new Vector(0,0);
 	private int[] moving = {0,0};
 	private double width;
 	private double height;
-	private Animation animation = new Animation();
+	private CharacterAnimation animation = new CharacterAnimation();
 	
-	public Vector vector() {
-		return vector;
+	
+	public Vector coord() {
+		return coord;
 	}
-	public void setVector(Vector vector) {
-		this.vector = vector;
+	public void setCoord(Vector coord) {
+		this.coord = coord;
 	}
 	public Vector changeHitBox() {
 		return changeHitBox;
@@ -24,15 +26,15 @@ public class Character {
 		this.changeHitBox = changeHitBox;
 	}
 	public Vector visibleVector() {
-		return visibleVector;
+		return visibleCoord;
 	}
 	public void setVisibleVector(Vector visibleVector) {
-		this.visibleVector = visibleVector;
+		this.visibleCoord = visibleVector;
 	}
-	public Animation animation() {
+	public CharacterAnimation animation() {
 		return animation;
 	}
-	public void setAnimation(Animation animation) {
+	public void setAnimation(CharacterAnimation animation) {
 		this.animation = animation;
 	}
 	public double width() {
@@ -52,5 +54,15 @@ public class Character {
 	}
 	public void setMoving(int[] moving) {
 		this.moving = moving;
+	}
+
+
+	public Vector speed() {
+		return speed;
+	}
+
+
+	public void setSpeed(Vector speed) {
+		this.speed = speed;
 	}
 }

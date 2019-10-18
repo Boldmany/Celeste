@@ -11,17 +11,23 @@ public class OnKeyReleased implements EventHandler<KeyEvent>{
 	 */
 	public void handle(KeyEvent key) {
 		
-		if(key.getCode() == KeyCode.RIGHT) {
+		if(key.getCode() == KeyCode.RIGHT && MapObjects.watermelon().moving()[0] == 1) {
 			MapObjects.watermelon().moving()[0] = 0;
 		}
-		if(key.getCode() == KeyCode.LEFT) {
+		if(key.getCode() == KeyCode.LEFT && MapObjects.watermelon().moving()[0] == -1) {
 			MapObjects.watermelon().moving()[0] = 0;
 		}
-		if(key.getCode() == KeyCode.UP) {
+		if(key.getCode() == KeyCode.UP && MapObjects.watermelon().moving()[1] == -1) {
 			MapObjects.watermelon().moving()[1] = 0;
 		}
-		if(key.getCode() == KeyCode.DOWN) {
+		if(key.getCode() == KeyCode.DOWN && MapObjects.watermelon().moving()[1] == 1) {
 			MapObjects.watermelon().moving()[1] = 0;
+		}
+		if(key.getCode() == KeyCode.C) {
+		}
+		if(key.getCode() == KeyCode.Z) {
+			MapObjects.watermelon().setGrab(false);
+			MapObjects.watermelon().setClimbing(false);
 		}
 	}
 }

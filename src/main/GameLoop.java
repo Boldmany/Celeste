@@ -1,6 +1,6 @@
 package main;
 
-import character.Animation;
+import character.CharacterAnimation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -11,6 +11,11 @@ public class GameLoop implements EventHandler<ActionEvent> {
 	 */
 	public void handle(ActionEvent ev) {	
 		Main.gc().clearRect(0, 0, 1000, 650);
-		Animation.draw(Main.gc(), MapObjects.watermelon());
+		CharacterAnimation.draw(Main.gc(), MapObjects.watermelon());
+		MapObjects.watermelon().move();
+		for(int i = 0; i < MapObjects.brick().length; i++) {
+			MapObjects.brick()[i].draw(Main.gc());
+			Collision.brickCollision(MapObjects.watermelon(), MapObjects.brick()[i]);
+		}
 	}
 }

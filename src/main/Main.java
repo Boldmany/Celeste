@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 //Yonatan and Andrej
@@ -15,7 +16,7 @@ import javafx.util.Duration;
 // This is a video game where you dodge the pink stuff
 public class Main extends Application{
 	
-	private static Canvas canvas = new Canvas(1000, 650);
+	private static Canvas canvas = new Canvas(850, 550);
 	private static GraphicsContext gc = canvas.getGraphicsContext2D();
 	private static Group group = new Group();
 	private static int gameState = 0;
@@ -36,7 +37,7 @@ public class Main extends Application{
 			
 			scene.setOnKeyPressed(new OnKeyPressed()); // input once clicked
 			scene.setOnKeyReleased(new OnKeyReleased()); // input once released
-			
+			//window.initStyle(StageStyle.UNDECORATED);
 			window.setScene(scene);
 			window.setTitle("VeggieTales The Sequel");
 			window.show();

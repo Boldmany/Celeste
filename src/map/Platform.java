@@ -1,29 +1,62 @@
 package map;
-import javafx.scene.image.Image;
 import main.Vector;
 
 
 public class Platform {
-	private Vector vector = new Vector(0, 0);
-	private Image image = new Image("");
+	private Vector coord = new Vector(0, 0);
+	private Vector visibleCoord = new Vector(0, 0);
+	private double height = 0;
+	private double width = 0;
+	private Type type;
+	
+	public Platform(Vector coord, double width, double height, Type type) {
+		this.setCoord(coord);
+		this.setWidth(width);
+		this.setHeight(height);
+		this.setType(type);
+	}
 
 	public void collision(Character character) {
 		
 	}
 
-	public Vector vector() {
-		return vector;
+	public double height() {
+		return height;
 	}
 
-	public void setVector(Vector vector) {
-		this.vector = vector;
+	public void setHeight(double height) {
+		this.height = height;
 	}
 
-	public Image image() {
-		return image;
+	public double width() {
+		return width;
 	}
 
-	public void setImage(Image image) {
-		this.image = image;
+	public void setWidth(double width) {
+		this.width = width;
+	}
+	
+	public Vector visibleCoord() {
+		return visibleCoord;
+	}
+
+	public void setVisibleCoord(Vector visibleCoord) {
+		this.visibleCoord = visibleCoord;
+	}
+
+	public Vector coord() {
+		return coord;
+	}
+
+	public void setCoord(Vector coord) {
+		this.coord = coord;
+	}
+
+	public Type type() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
 	}
 }
