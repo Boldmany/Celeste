@@ -10,6 +10,7 @@ public class Collision {
 			character.setJump(false);
 			character.speed().setY(0);
 			character.coord().setY(550 - character.height());
+			character.dash().setCanDash(true);
 		}
 	}
 
@@ -26,6 +27,7 @@ public class Collision {
 				character.speed().setY(0);
 				character.coord().setY(brick.coord().y() - character.height());
 				character.setJump(false);
+				character.dash().setCanDash(true);
 			}
 			if(character.speed().x() * character.moving()[0] > 0 && character.coord().x() + character.width() - character.speed().x() <= brick.coord().x()) {
 				character.speed().setX(0);
@@ -35,12 +37,16 @@ public class Collision {
 				character.speed().setX(0);
 				character.coord().setX(brick.coord().x() + brick.width());
 			}
-			if(character.coord().x() + character.width() >= brick.coord().x() &&
-					character.coord().x() <= brick.coord().x() + brick.width() && character.grab()) {
-				character.setClimbing(true);
-				character.speed().setY(0);
-				character.speed().setX(0);
-			}
+		}
+		
+		if(character.coord().x() + character.width() >= brick.coord().x() 
+				&& character.coord().x() <= brick.coord().x() + brick.width()
+				&& character.coord().y() <= brick.coord().y() + brick.height()
+				&& character.coord().y() + character.height() >= brick.coord().y()
+				&& character.climb().grab() && character.climb().canClimb()) {
+			character.climb().setClimbing(true);
+			character.speed().setY(0);
+			character.speed().setX(0);
 		}
 	}
 	

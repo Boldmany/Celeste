@@ -26,8 +26,10 @@ public class OnKeyReleased implements EventHandler<KeyEvent>{
 		if(key.getCode() == KeyCode.C) {
 		}
 		if(key.getCode() == KeyCode.Z) {
-			MapObjects.watermelon().setGrab(false);
-			MapObjects.watermelon().setClimbing(false);
+			MapObjects.watermelon().climb().setGrab(false);
+			MapObjects.watermelon().climb().setClimbing(false);
+			MapObjects.watermelon().climb().setCanClimb(true);
+			MapObjects.watermelon().animation().direction()[0] = MapObjects.watermelon().moving()[0] == 1;
 		}
 	}
 }

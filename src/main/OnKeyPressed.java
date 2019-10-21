@@ -12,11 +12,15 @@ public class OnKeyPressed implements EventHandler<KeyEvent>{
 	public void handle(KeyEvent key) {
 		if(key.getCode() == KeyCode.RIGHT) {
 			MapObjects.watermelon().moving()[0] = 1;
-			MapObjects.watermelon().animation().direction()[0] = true;
+			if(!MapObjects.watermelon().climb().climbing()) {
+				MapObjects.watermelon().animation().direction()[0] = true;
+			}
 		}
 		if(key.getCode() == KeyCode.LEFT) {
 			MapObjects.watermelon().moving()[0] = -1;
-			MapObjects.watermelon().animation().direction()[0] = false;
+			if(!MapObjects.watermelon().climb().climbing()) {
+				MapObjects.watermelon().animation().direction()[0] = false;
+			}
 		}
 		if(key.getCode() == KeyCode.UP) {
 			MapObjects.watermelon().moving()[1] = -1;
@@ -29,21 +33,15 @@ public class OnKeyPressed implements EventHandler<KeyEvent>{
 
 		if(key.getCode() == KeyCode.C) {
 			int speed = 9;
-			
+
 			if(!MapObjects.watermelon().jump()) {
 				MapObjects.watermelon().speed().setY(-speed);
 				MapObjects.watermelon().setJump(true);
 			}
 
-			if(MapObjects.watermelon().climbing()) {
+			if(MapObjects.watermelon().climb().climbing()) {
 				if(MapObjects.watermelon().moving()[0] == 0) {
-					if(MapObjects.watermelon().moving()[1] == -1) {
-						MapObjects.watermelon().speed().setY(-speed);
-					}
-					else{
-						MapObjects.watermelon().speed().setY(-speed * Math.sin(Math.toRadians(45)));
-						MapObjects.watermelon().speed().setX(speed * Math.cos(Math.toRadians(45)));
-					}
+					MapObjects.watermelon().speed().setY(-speed);
 				}
 				else {
 					if(MapObjects.watermelon().moving()[1] == -1){
@@ -54,30 +52,31 @@ public class OnKeyPressed implements EventHandler<KeyEvent>{
 						MapObjects.watermelon().speed().setY(-speed * Math.sin(Math.toRadians(35)));
 						MapObjects.watermelon().speed().setX(speed * Math.cos(Math.toRadians(35)));
 					}
+					MapObjects.watermelon().animation().direction()[0] = !MapObjects.watermelon().animation().direction()[0];
 				}
-				MapObjects.watermelon().setClimbing(false);
+				MapObjects.watermelon().climb().setClimbing(false);
+				MapObjects.watermelon().climb().setCanClimb(false);
 			}
-			
+
 		}
 
 		if(key.getCode() == KeyCode.X) {
-
+			
 			int speed = 15;
 
-			if(MapObjects.watermelon().moving()[0]  == 0) {
-				if(MapObjects.watermelon().moving()[1] == -1) {
+			if(MapObjects.watermelon().moving()[0]  == 0) { // not moving horizontally
+				if(MapObjects.watermelon().moving()[1] == -1) { // moving up
 					MapObjects.watermelon().speed().setY(-speed);
 				}
-
-				else if(MapObjects.watermelon().moving()[1] == 1) {
+				else if(MapObjects.watermelon().moving()[1] == 1) { // moving down
 					MapObjects.watermelon().speed().setY(speed);
 				}
 			}
-			else if (MapObjects.watermelon().moving()[1]  == 0) {
+			else if (MapObjects.watermelon().moving()[1]  == 0) { // not moving vertically
 				MapObjects.watermelon().speed().setY(0);
 				MapObjects.watermelon().speed().setX(speed);
 			}
-			else if(MapObjects.watermelon().moving()[1]  != 0 &&  MapObjects.watermelon().moving()[0]  != 0){
+			else if(MapObjects.watermelon().moving()[1]  != 0 &&  MapObjects.watermelon().moving()[0]  != 0){ // you are moving in both axis
 				if(MapObjects.watermelon().moving()[1] == -1) {
 					MapObjects.watermelon().speed().setY(-speed * Math.sin(Math.toRadians(45)));
 				}
@@ -87,14 +86,19 @@ public class OnKeyPressed implements EventHandler<KeyEvent>{
 				}
 				MapObjects.watermelon().speed().setX(speed * Math.cos(Math.toRadians(45)));
 			}
-
+			
 			if(MapObjects.watermelon().moving()[0]  != 0 || MapObjects.watermelon().moving()[1] != 0) {
-				MapObjects.watermelon().dash().resetFrames();
+				MapObjects.watermelon().dash().setCanDash(false);
+				MapObjects.watermelon().dash().dashDuration().resetFrames();
+				if(MapObjects.watermelon().climb().climbing()) {
+					MapObjects.watermelon().climb().setCanClimb(false);
+					MapObjects.watermelon().climb().setClimbing(false);
+				}
 			}
 		}
 
-		if(key.getCode() == KeyCode.Z) {
-			MapObjects.watermelon().setGrab(true);
+		if(key.getCode() == KeyCode.Z && MapObjects.watermelon().climb().canClimb()) {
+			MapObjects.watermelon().climb().setGrab(true);
 		}
 	}
 }

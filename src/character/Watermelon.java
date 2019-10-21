@@ -2,38 +2,43 @@ package character;
 
 import javafx.scene.image.Image;
 import main.Collision;
-import main.Timer;
 
 public class Watermelon extends Character{
 
 	private final double MAX_SPEED = 4;
 	private boolean jump = false;
-	private Timer dash = new Timer(10);
-	private boolean grab = false;
-	private boolean climbing = false;
+	private Dash dash = new Dash();
+	private Climb climb = new Climb();
 
 	public Watermelon() {
 		coord().setX(100);
 		coord().setY(200);
-		animation().images().add(new Image("file:resources/Dash/WatsonSprite1.png"));
-		animation().images().add(new Image("file:resources/Dash/WatsonSprite2.png"));
-		animation().images().add(new Image("file:resources/Dash/WatsonSprite1.png")); 
-		animation().images().add(new Image("file:resources/Dash/WatsonSprite3.png"));
-		animation().images().add(new Image("file:resources/Dash/WatsonSprite4.png"));
-		animation().images().add(new Image("file:resources/Dash/WatsonSprite3.png"));
-		
-		animation().images().add(new Image("file:resources/Dashless/WatsonSprite1.png"));
-		animation().images().add(new Image("file:resources/Dashless/WatsonSprite2.png"));
-		animation().images().add(new Image("file:resources/Dashless/WatsonSprite1.png")); 
-		animation().images().add(new Image("file:resources/Dashless/WatsonSprite3.png"));
-		animation().images().add(new Image("file:resources/Dashless/WatsonSprite4.png"));
-		animation().images().add(new Image("file:resources/Dashless/WatsonSprite3.png"));
-		setWidth(animation().images().get(animation().imageIndex()).getWidth());
-		setHeight(animation().images().get(animation().imageIndex()).getHeight());
+
+		animation().dash().images().add(new Image("file:resources/Dash/WatsonSprite1.png"));
+		animation().dash().images().add(new Image("file:resources/Dash/WatsonSprite2.png"));
+		animation().dash().images().add(new Image("file:resources/Dash/WatsonSprite1.png")); 
+		animation().dash().images().add(new Image("file:resources/Dash/WatsonSprite3.png"));
+		animation().dash().images().add(new Image("file:resources/Dash/WatsonSprite4.png"));
+		animation().dash().images().add(new Image("file:resources/Dash/WatsonSprite3.png"));
+
+		animation().dashless().images().add(new Image("file:resources/Dashless/WatsonSprite1.png"));
+		animation().dashless().images().add(new Image("file:resources/Dashless/WatsonSprite2.png"));
+		animation().dashless().images().add(new Image("file:resources/Dashless/WatsonSprite1.png")); 
+		animation().dashless().images().add(new Image("file:resources/Dashless/WatsonSprite3.png"));
+		animation().dashless().images().add(new Image("file:resources/Dashless/WatsonSprite4.png"));
+		animation().dashless().images().add(new Image("file:resources/Dashless/WatsonSprite3.png"));
+
+		setWidth(animation().dashless().images().get(animation().imageIndex()).getWidth());
+		setHeight(animation().dashless().images().get(animation().imageIndex()).getHeight());
 	}
 
 	public void move() {
-		if(this.finishedDashing() && !this.climbing()) {
+		if(this.finishedDashing() && !this.climb().climbing()) {
+			if(!this.climb().canClimb()) {
+				if(this.speed().y() >= 0) {
+					this.climb().setCanClimb(true);
+				}
+			}
 			if(this.moving()[0] != 0) {
 				this.speed().setX(accelerate(this.speed().x()));
 			}
@@ -42,7 +47,7 @@ public class Watermelon extends Character{
 			}
 			this.speed().setY(gravity(this.speed().y()));
 		}
-
+		
 		Collision.test(this);
 		this.coord().setX(this.coord().x() + this.speed().x() * this.moving()[0]);
 		this.coord().setY(this.coord().y() + this.speed().y());
@@ -80,21 +85,17 @@ public class Watermelon extends Character{
 
 		return speed;
 	}
-	
+
 	public boolean finishedDashing() {
-		boolean done = false;
-		
+
 		// self explanatory
-		if(this.dash().frames()[0] < this.dash().frames()[1]) {
-			this.dash().frames()[0] += 1;
-			if(this.dash().frames()[0] == this.dash().frames()[1] && this.speed().y() < 0) {
+		if(!this.dash().dashDuration().complete()) {
+			this.dash().dashDuration().update();
+			if(this.dash().dashDuration().complete() && this.speed().y() < 0) {
 				this.speed().setY(-3);
 			}
 		}
-		else {
-			done = true;
-		}
-		return done;
+		return this.dash().dashDuration().complete();
 	}
 
 	public boolean jump() {
@@ -108,27 +109,24 @@ public class Watermelon extends Character{
 	public void setJump(boolean jump) {
 		this.jump = jump;
 	}
-	public Timer dash() {
+
+	public Climb climb() {
+		return climb;
+	}
+
+	public void setCash(Climb climb) {
+		this.climb = climb;
+	}
+
+	public Dash dash() {
 		return dash;
 	}
 
-	public void setDash(Timer dash) {
+	public void setDash(Dash dash) {
 		this.dash = dash;
 	}
 
-	public boolean climbing() {
-		return climbing;
-	}
-
-	public void setClimbing(boolean climbing) {
-		this.climbing = climbing;
-	}
-
-	public boolean grab() {
-		return grab;
-	}
-
-	public void setGrab(boolean grab) {
-		this.grab = grab;
+	public void setClimb(Climb climb) {
+		this.climb = climb;
 	}
 }
