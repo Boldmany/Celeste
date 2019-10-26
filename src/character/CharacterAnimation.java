@@ -16,6 +16,13 @@ public class CharacterAnimation {
 		double width = 0;
 		boolean canDash = character.dash().canDash();
 
+		if(character.speed().x() * character.moving()[0] > 0) {
+			character.animation().direction()[0] = true;
+		}
+		else if(character.speed().x() * character.moving()[0] < 0){
+			character.animation().direction()[0] = false;
+		}
+		
 		if(character.animation().direction()[0]) {
 			xCoord = character.coord().x();
 			width = character.width();

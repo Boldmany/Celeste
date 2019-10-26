@@ -15,7 +15,7 @@ public class GameLoop implements EventHandler<ActionEvent> {
 		MapObjects.watermelon().move();
 		for(int i = 0; i < MapObjects.brick().length; i++) {
 			MapObjects.brick()[i].draw(Main.gc());
-			Collision.brickCollision(MapObjects.watermelon(), MapObjects.brick()[i]);
+			Collision.brickCollision(MapObjects.watermelon(), MapObjects.brick()[i], i);
 		}
 	}
 }

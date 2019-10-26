@@ -7,7 +7,7 @@ import map.Directions;
 public class MapObjects {
 
 	private static Watermelon watermelon = new Watermelon();
-	private static Brick[] brick = {new Brick(new Vector(400, 200), 100, 300, Directions.UP.getValue() | Directions.DOWN.getValue() | Directions.LEFT.getValue() | Directions.RIGHT.getValue()), new Brick(new Vector(401, 100), 100, 100)};
+	private static Brick[] brick = {new Brick(new Vector(400, 200), 100, 400, Directions.UP.getValue() | Directions.DOWN.getValue() | Directions.LEFT.getValue() | Directions.RIGHT.getValue()), new Brick(new Vector(401, 100), 100, 100)};
 
 	public static Watermelon watermelon() {
 		return watermelon;

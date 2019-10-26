@@ -29,7 +29,6 @@ public class OnKeyReleased implements EventHandler<KeyEvent>{
 			MapObjects.watermelon().climb().setGrab(false);
 			MapObjects.watermelon().climb().setClimbing(false);
 			MapObjects.watermelon().climb().setCanClimb(true);
-			MapObjects.watermelon().animation().direction()[0] = MapObjects.watermelon().moving()[0] == 1;
 		}
 	}
 }

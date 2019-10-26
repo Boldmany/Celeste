@@ -12,15 +12,9 @@ public class OnKeyPressed implements EventHandler<KeyEvent>{
 	public void handle(KeyEvent key) {
 		if(key.getCode() == KeyCode.RIGHT) {
 			MapObjects.watermelon().moving()[0] = 1;
-			if(!MapObjects.watermelon().climb().climbing()) {
-				MapObjects.watermelon().animation().direction()[0] = true;
-			}
 		}
 		if(key.getCode() == KeyCode.LEFT) {
 			MapObjects.watermelon().moving()[0] = -1;
-			if(!MapObjects.watermelon().climb().climbing()) {
-				MapObjects.watermelon().animation().direction()[0] = false;
-			}
 		}
 		if(key.getCode() == KeyCode.UP) {
 			MapObjects.watermelon().moving()[1] = -1;
@@ -52,7 +46,6 @@ public class OnKeyPressed implements EventHandler<KeyEvent>{
 						MapObjects.watermelon().speed().setY(-speed * Math.sin(Math.toRadians(35)));
 						MapObjects.watermelon().speed().setX(speed * Math.cos(Math.toRadians(35)));
 					}
-					MapObjects.watermelon().animation().direction()[0] = !MapObjects.watermelon().animation().direction()[0];
 				}
 				MapObjects.watermelon().climb().setClimbing(false);
 				MapObjects.watermelon().climb().setCanClimb(false);
