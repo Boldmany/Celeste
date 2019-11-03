@@ -25,10 +25,10 @@ public class Character {
 	public void setChangeHitBox(Vector changeHitBox) {
 		this.changeHitBox = changeHitBox;
 	}
-	public Vector visibleVector() {
+	public Vector visibleCoord() {
 		return visibleCoord;
 	}
-	public void setVisibleVector(Vector visibleVector) {
+	public void setVisibleCoord(Vector visibleVector) {
 		this.visibleCoord = visibleVector;
 	}
 	public CharacterAnimation animation() {
@@ -60,7 +60,6 @@ public class Character {
 	public Vector speed() {
 		return speed;
 	}
-
 
 	public void setSpeed(Vector speed) {
 		this.speed = speed;

@@ -2,6 +2,7 @@ package character;
 
 import javafx.scene.image.Image;
 import main.Collision;
+import main.MapObjects;
 
 public class Watermelon extends Character{
 
@@ -13,6 +14,8 @@ public class Watermelon extends Character{
 	public Watermelon() {
 		coord().setX(100);
 		coord().setY(200);
+		visibleCoord().setX(100);
+		visibleCoord().setY(200);
 
 		animation().dash().images().add(new Image("file:resources/Dash/WatsonSprite1.png"));
 		animation().dash().images().add(new Image("file:resources/Dash/WatsonSprite2.png"));
@@ -47,10 +50,40 @@ public class Watermelon extends Character{
 			}
 			this.speed().setY(gravity(this.speed().y()));
 		}
-		
+		if(this.climb().grab() && this.climb().collision() && this.climb().canClimb()) {
+			this.climb().setClimbing(true);
+			this.speed().setY(0);
+			this.speed().setX(0);
+		}
+
 		Collision.test(this);
 		this.coord().setX(this.coord().x() + this.speed().x() * this.moving()[0]);
 		this.coord().setY(this.coord().y() + this.speed().y());
+	}
+
+	public void updateVisible() {
+		
+		this.visibleCoord().setY(this.coord().y() + MapObjects.levels().get(0).coord().x());
+		
+		if(this.visibleCoord().x() >= 425) {
+			if(MapObjects.levels().get(0).coord().x() + MapObjects.levels().get(0).length().x() - this.coord().x() <= 425) {
+				this.visibleCoord().setX(850 - (MapObjects.levels().get(0).coord().x() + MapObjects.levels().get(0).length().x() - this.coord().x()));
+			}
+			else {
+				MapObjects.levels().get(0).move(-this.speed().x() * this.moving()[0]);
+			}
+		}
+		
+		if(this.coord().x() - MapObjects.levels().get(0).coord().x() <= 425) {
+			this.visibleCoord().setX(this.coord().x() - MapObjects.levels().get(0).coord().x());
+			if(this.visibleCoord().x() >= 425) {
+				MapObjects.levels().get(0).move(this.speed().x() * this.moving()[0]);
+			}
+		}
+		else if(this.visibleCoord().x() < 425) {
+			this.coord().setX(MapObjects.levels().get(0).coord().x() + 425);
+			this.visibleCoord().setX(425);
+		}
 	}
 
 	public double accelerate(double speed) {

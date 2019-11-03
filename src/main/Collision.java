@@ -39,16 +39,20 @@ public class Collision {
 				character.coord().setX(brick.coord().x() - character.width());
 			}
 		}
-		
-		if(character.coord().x() + character.width() >= brick.coord().x() 
-				&& character.coord().x() <= brick.coord().x() + brick.width()
-				&& character.coord().y() <= brick.coord().y() + brick.height()
-				&& character.coord().y() + character.height() >= brick.coord().y()
-				&& character.climb().grab() && character.climb().canClimb()) {
-			character.climb().setClimbing(true);
-			character.speed().setY(0);
-			character.speed().setX(0);
-		}
+		double changeHitbox = 2;
+		if(character.coord().x() + character.width() + changeHitbox >= brick.coord().x() 
+                && character.coord().x() - changeHitbox <= brick.coord().x() + brick.width()
+                && character.coord().y() <= brick.coord().y() + brick.height()
+                && character.coord().y() + character.height() >= brick.coord().y()) {
+        if(character.coord().x() + character.width() - character.speed().x() <= brick.coord().x()) {
+                character.climb().setCollision(true);
+				character.coord().setX(brick.coord().x() - character.width());
+        }
+        else if(character.coord().x() + character.speed().x() >= brick.coord().x() + brick.width()) {
+                character.climb().setCollision(true);
+                character.coord().setX(brick.coord().x() + brick.width());
+        }
+}
 	}
 	
 	public void println(String s) {

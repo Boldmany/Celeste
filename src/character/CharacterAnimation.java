@@ -24,11 +24,11 @@ public class CharacterAnimation {
 		}
 		
 		if(character.animation().direction()[0]) {
-			xCoord = character.coord().x();
+			xCoord = character.visibleCoord().x();
 			width = character.width();
 		}
 		else {
-			xCoord = character.coord().x() + character.width();
+			xCoord = character.visibleCoord().x() + character.width();
 			width = -character.width();
 		}
 		
@@ -54,7 +54,7 @@ public class CharacterAnimation {
 			character.animation().timer().resetFrames();
 			character.animation().setImageIndex(0);
 		}
-		gc.drawImage(state.images().get((character.animation().imageIndex())), 0, 0, character.width(), character.height(), xCoord, character.coord().y(), width, character.height());
+		gc.drawImage(state.images().get((character.animation().imageIndex())), 0, 0, character.width(), character.height(), xCoord, character.visibleCoord().y(), width, character.height());
 	}
 
 	public int imageIndex() {

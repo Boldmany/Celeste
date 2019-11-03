@@ -10,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import map.Brick;
 
 //Yonatan and Andrej
 // June 14 2020
@@ -22,6 +23,9 @@ public class Main extends Application{
 	private static int gameState = 0;
 	
 	public static void main(String[] args) {
+		MapObjects.levels().add(new Level());
+		MapObjects.levels().get(0).bricks().add(new Brick(new Vector(400, 200), 100, 400, Direction.UP.getValue() | Direction.DOWN.getValue() | Direction.LEFT.getValue() | Direction.RIGHT.getValue()));
+		MapObjects.levels().get(0).bricks().add(new Brick(new Vector(401, 100), 100, 100));
 		launch(args);
 	}
 

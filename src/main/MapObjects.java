@@ -1,14 +1,16 @@
 package main;
 
+import java.util.ArrayList;
+
 import character.Watermelon;
 import map.Brick;
-import map.Directions;
 
 public class MapObjects {
 
 	private static Watermelon watermelon = new Watermelon();
-	private static Brick[] brick = {new Brick(new Vector(400, 200), 100, 400, Directions.UP.getValue() | Directions.DOWN.getValue() | Directions.LEFT.getValue() | Directions.RIGHT.getValue()), new Brick(new Vector(401, 100), 100, 100)};
-
+	private static Brick[] brick = {};
+	private static ArrayList<Level> levels =  new ArrayList<Level>();
+	
 	public static Watermelon watermelon() {
 		return watermelon;
 	}
@@ -23,5 +25,13 @@ public class MapObjects {
 
 	public static void setBrick(Brick[] brick) {
 		MapObjects.brick = brick;
+	}
+
+	public static ArrayList<Level> levels() {
+		return levels;
+	}
+
+	public static void setLevels(ArrayList<Level> levels) {
+		MapObjects.levels = levels;
 	}
 }

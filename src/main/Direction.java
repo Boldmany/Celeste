@@ -1,6 +1,6 @@
-package map;
+package main;
 
-public enum Directions {
+public enum Direction {
 	UP(0x1),
 	DOWN(0x2),
 	LEFT(0x4),
@@ -8,7 +8,7 @@ public enum Directions {
 	
 	private final int n;
 	
-	private Directions(int n) {
+	private Direction(int n) {
 		this.n = n;
 	}
 	
