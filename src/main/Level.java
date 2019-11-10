@@ -6,13 +6,25 @@ import map.Brick;
 
 public class Level {
 	private Vector coord = new Vector(0, 0);
-	private Vector length = new Vector(1000, 550);
+	private Vector length = new Vector(850, 850);
 	private ArrayList<Brick> bricks = new ArrayList<Brick>();
 	private int[] direction= new int[4];
 	
-	public void move(double speed) {
+	public void moveHorizontally(double speed) {
 		for(int i = 0; i < bricks().size(); i++) {
 			bricks().get(i).visibleCoord().setX(bricks().get(i).visibleCoord().x() + speed);
+			for(int j = 0; j < bricks().get(i).spikes().size(); j++) {
+				bricks().get(i).spikes().get(j).visibleCoord().setX(bricks().get(i).spikes().get(j).visibleCoord().x() + speed);
+			}
+		}
+	}
+	
+	public void moveVertically(double speed) {
+		for(int i = 0; i < bricks().size(); i++) {
+			bricks().get(i).visibleCoord().setY(bricks().get(i).visibleCoord().y() + speed);
+			for(int j = 0; j < bricks().get(i).spikes().size(); j++) {
+				bricks().get(i).spikes().get(j).visibleCoord().setY(bricks().get(i).spikes().get(j).visibleCoord().y() + speed);
+			}
 		}
 	}
 	

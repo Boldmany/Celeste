@@ -107,5 +107,8 @@ public class OnKeyPressed implements EventHandler<KeyEvent>{
 		if(key.getCode() == KeyCode.Z) {
 			MapObjects.watermelon().climb().setGrab(true);
 		}
+		if(key.getCode() == KeyCode.H) {
+			System.out.println(MapObjects.levels().get(0).bricks().get(0).visibleCoord().x() + MapObjects.levels().get(0).bricks().get(0).width() - MapObjects.watermelon().visibleCoord().x());
+		}
 	}
 }

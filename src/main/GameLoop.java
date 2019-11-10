@@ -11,9 +11,7 @@ public class GameLoop implements EventHandler<ActionEvent> {
 	 */
 	public void handle(ActionEvent ev) {	
 		Main.gc().clearRect(0, 0, 1000, 650);
-
-		CharacterAnimation.draw(Main.gc(), MapObjects.watermelon());
-		Main.gc().drawImage(MapObjects.watermelon().animation().dashless().images().get(0), MapObjects.watermelon().coord().x(), MapObjects.watermelon().coord().y());
+		
 		MapObjects.watermelon().move();
 		MapObjects.watermelon().climb().setCollision(false);
 		
@@ -21,6 +19,8 @@ public class GameLoop implements EventHandler<ActionEvent> {
 			MapObjects.levels().get(0).bricks().get(i).draw(Main.gc());
 			Collision.brickCollision(MapObjects.watermelon(), MapObjects.levels().get(0).bricks().get(i), i);
 		}
+
 		MapObjects.watermelon().updateVisible();
+		CharacterAnimation.draw(Main.gc(), MapObjects.watermelon());
 	}
 }

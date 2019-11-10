@@ -6,10 +6,10 @@ import map.Brick;
 public class Collision {
 	public static int counter = 0;
 	public static void test(Watermelon character) {
-		if(character.coord().y() + character.height() + character.speed().y() > 550) {
+		if(character.coord().y() + character.height() + character.speed().y() > 550 + ((MapObjects.levels().get(0).length().y() - 550))) {
 			character.setJump(false);
 			character.speed().setY(0);
-			character.coord().setY(550 - character.height());
+			character.coord().setY(550 + ((MapObjects.levels().get(0).length().y() - character.height()) - 550));
 			character.dash().setCanDash(true);
 		}
 	}

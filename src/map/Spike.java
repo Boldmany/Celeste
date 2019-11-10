@@ -12,9 +12,9 @@ public class Spike extends Platform{
 	
 	public void draw(GraphicsContext gc) {
 		gc.setStroke(Color.RED);
-		gc.strokeLine(this.coord().x(), this.coord().y(), this.coord().x() + this.width(), this.coord().y());
-		gc.strokeLine(this.coord().x(), this.coord().y(), this.coord().x(), this.coord().y() + this.height());
-		gc.strokeLine(this.coord().x(), this.coord().y() + this.height(), this.coord().x() + this.width(), this.coord().y() + this.height());
-		gc.strokeLine(this.coord().x() + this.width(), this.coord().y(), this.coord().x() + this.width(), this.coord().y() + this.height());
+		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y(), this.visibleCoord().x() + this.width(), this.visibleCoord().y());
+		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y(), this.visibleCoord().x(), this.visibleCoord().y() + this.height());
+		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y() + this.height(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
+		gc.strokeLine(this.visibleCoord().x() + this.width(), this.visibleCoord().y(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
 	}
 }
