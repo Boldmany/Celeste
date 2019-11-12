@@ -6,8 +6,8 @@ import main.Vector;
 
 public class Spike extends Platform{
 
-	public Spike(Vector coord, double width, double height, Type type) {
-		super(coord, width, height, type);
+	public Spike(Vector coord, Vector visibleCoord, double width, double height, Type type) {
+		super(coord, visibleCoord, width, height, type);
 	}
 	
 	public void draw(GraphicsContext gc) {

@@ -9,8 +9,9 @@ public class Platform {
 	private double width = 0;
 	private Type type;
 	
-	public Platform(Vector coord, double width, double height, Type type) {
+	public Platform(Vector coord, Vector visibleCoord, double width, double height, Type type) {
 		this.setCoord(coord);
+		this.setVisibleCoord(visibleCoord);
 		this.setWidth(width);
 		this.setHeight(height);
 		this.setType(type);

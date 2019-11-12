@@ -42,8 +42,7 @@ public class Level {
 				else if(fields[0].equals("brick")){
 					double x = Double.parseDouble(fields[1]);
 					double y = Double.parseDouble(fields[2]);
-					Brick brick = new Brick(new Vector(x + this.coord().x(), y + this.coord().y()), Double.parseDouble(fields[3]), Double.parseDouble(fields[4]));
-					brick.setVisibleCoord(new Vector(x, y));
+					Brick brick = new Brick(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y), Double.parseDouble(fields[3]), Double.parseDouble(fields[4]));
 					brick.addSpike(line);
 					this.bricks().add(brick);	
 				}

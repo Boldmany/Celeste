@@ -10,24 +10,22 @@ public class Brick extends Platform {
 	
 	private ArrayList<Spike> spikes = new ArrayList<Spike>();
 
-	public Brick(Vector coord, double width, double height) {
-		super(coord, width, height, Type.SAFE);
+	public Brick(Vector coord, Vector visibleCoord, double width, double height) {
+		super(coord, visibleCoord, width, height, Type.SAFE);
 	}
 	
 	public void addSpike(String s){
 		if(s.contains("up")) {
-			Spike spike = new Spike(new Vector(this.coord().x() + 1, this.coord().y() - 5), this.width() - 2, 5, Type.DEATH);
-			spike.setVisibleCoord(new Vector(spike.coord().x() - this.coord().x(), spike.coord().y() - this.coord().x()));
-			spikes.add(spike);
+			spikes.add(new Spike(new Vector(this.coord().x() + 1, this.coord().y() - 5), new Vector(this.visibleCoord().x() + 1, this.visibleCoord().y() - 5), this.width() - 2, 5, Type.DEATH));
 		}
 		if(s.contains("right")) {
-			spikes.add(new Spike(new Vector(this.coord().x() + this.width(), this.coord().y() + 1), 5, this.height() - 2, Type.DEATH));
+			spikes.add(new Spike(new Vector(this.coord().x() + this.width(), this.coord().y() + 1), new Vector(this.visibleCoord().x() + this.width(), this.visibleCoord().y() + 1), 5, this.height() - 2, Type.DEATH));
 		}
 		if(s.contains("down")) {
-			spikes.add(new Spike(new Vector(this.coord().x() + 1, this.coord().y() + this.height()), this.width() - 2, 5, Type.DEATH));
+			spikes.add(new Spike(new Vector(this.coord().x() + 1, this.coord().y() + this.height()), new Vector(this.visibleCoord().x() + 1, this.visibleCoord().y() + this.height()),this.width() - 2, 5, Type.DEATH));
 		}
 		if(s.contains("left")){
-			spikes.add(new Spike(new Vector(this.coord().x() - 5, this.coord().y() + 1), 5, this.height() - 2, Type.DEATH));
+			spikes.add(new Spike(new Vector(this.coord().x() - 5, this.coord().y() + 1), new Vector(this.visibleCoord().x() - 5, this.visibleCoord().y() + 1), 5, this.height() - 2, Type.DEATH));
 		}
 	}
 	

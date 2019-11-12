@@ -46,11 +46,15 @@ public class Collision {
 				&& character.coord().y() + character.height() >= brick.coord().y()) {
 			if(character.coord().x() + character.width() - character.speed().x() <= brick.coord().x()) {
 				character.climb().setCollision(true);
-				character.coord().setX(brick.coord().x() - character.width());
+				if(character.climb().grab()) {
+					character.coord().setX(brick.coord().x() - character.width());
+				}
 			}
 			else if(character.coord().x() + character.speed().x() >= brick.coord().x() + brick.width()) {
 				character.climb().setCollision(true);
-				character.coord().setX(brick.coord().x() + brick.width());
+				if(character.climb().grab()) {
+					character.coord().setX(brick.coord().x() + brick.width());
+				}
 			}
 		}
 	}
@@ -58,9 +62,17 @@ public class Collision {
 	public static void nextLevel(Watermelon character, Level level) {
 		if(character.visibleCoord().x() > 850 && level.connection()[1] != 0) {
 			MapObjects.setCurrentLevel(level.connection()[1] - 1);
+			Level currentLevel = MapObjects.levels().get(MapObjects.currentLevel());
 			character.visibleCoord().setX(0);
+			if(character.coord().y() - currentLevel.coord().y() > currentLevel.length().y() - 275) {
+				currentLevel.moveVertically(550 - currentLevel.length().y());
+			}
+			else if(character.coord().y() - currentLevel.coord().y() > 275 
+					&& character.coord().y() - currentLevel.coord().y() < 275 + (currentLevel.length().y() - 550)){
+				currentLevel.moveVertically(275 - (character.coord().y() - currentLevel.coord().y()));
+			}
 		}
-		else if(character.visibleCoord().x() < 0 && level.connection()[3] != 0) {
+		else if(character.visibleCoord().x() + character.width() < 0 && level.connection()[3] != 0) {
 			MapObjects.setCurrentLevel(level.connection()[3] - 1);
 		}
 		else if(character.visibleCoord().y() < 0 && level.connection()[0] != 0) {
