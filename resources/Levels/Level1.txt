@@ -1,1 +1,3 @@
-human
+coord 0 0
+length 1000 820
+brick 400 300 200 100 right left

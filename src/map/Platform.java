@@ -11,7 +11,6 @@ public class Platform {
 	
 	public Platform(Vector coord, double width, double height, Type type) {
 		this.setCoord(coord);
-		this.setVisibleCoord(new Vector(coord.x(), coord.y()));
 		this.setWidth(width);
 		this.setHeight(height);
 		this.setType(type);

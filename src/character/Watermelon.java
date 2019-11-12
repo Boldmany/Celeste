@@ -2,6 +2,7 @@ package character;
 
 import javafx.scene.image.Image;
 import main.Collision;
+import main.Level;
 import main.MapObjects;
 import main.Vector;
 
@@ -65,76 +66,76 @@ public class Watermelon extends Character{
 		this.coord().setY(this.coord().y() + this.speed().y());
 	}
 
-	public void updateVisible() {
+	public void updateVisible(Level level) {
 		final double HALF_X = 425.0;
 		final double HALF_Y = 275.0;
 
-		if(MapObjects.levels().get(0).length().x() > 850) {
+		if(level.length().x() > 850) {
 			if(this.visibleCoord().x() >= HALF_X) {
-				if(MapObjects.levels().get(0).coord().x() + MapObjects.levels().get(0).length().x() - this.coord().x() <= HALF_X) {
-					if(MapObjects.levels().get(0).coord().x() + MapObjects.levels().get(0).length().x() - this.coord().x() + (this.moving()[0] * this.speed().x())  >= HALF_X) {
-						MapObjects.levels().get(0).moveHorizontally(this.deltaCoord().x() - (MapObjects.levels().get(0).length().x() - HALF_X));
+				if(level.coord().x() + level.length().x() - this.coord().x() <= HALF_X) {
+					if(level.coord().x() + level.length().x() - this.coord().x() + (this.moving()[0] * this.speed().x())  >= HALF_X) {
+						level.moveHorizontally((this.deltaCoord().x()- level.coord().x()) - ((level.length().x()) - HALF_X));
+						System.out.println(MapObjects.levels().get(1).bricks().get(0).coord().x());
 					}
-					this.visibleCoord().setX(850 - (MapObjects.levels().get(0).coord().x() + MapObjects.levels().get(0).length().x() - this.coord().x()));
+					this.visibleCoord().setX(850 - (level.coord().x() + level.length().x() - this.coord().x()));
 				}
 				else {
 					if(this.visibleCoord().x() > HALF_X) {
-						this.coord().setX(MapObjects.levels().get(0).coord().x() + MapObjects.levels().get(0).length().x() - HALF_X);
+						this.coord().setX(level.coord().x() + level.length().x() - HALF_X);
 						this.visibleCoord().setX(HALF_X);
 					}
-					else if(this.coord().x() - MapObjects.levels().get(0).coord().x() < HALF_X) {
-
-						MapObjects.levels().get(0).moveHorizontally(this.deltaCoord().x() - HALF_X);
+					else if(this.coord().x() - level.coord().x() < HALF_X) {
+						level.moveHorizontally((this.deltaCoord().x()- level.coord().x()) - HALF_X);
 					}
 					else {
-						MapObjects.levels().get(0).moveHorizontally(this.deltaCoord().x() - this.coord().x());
+						level.moveHorizontally(this.deltaCoord().x() - this.coord().x());
 					}
 				}
 			}
 
-			if(this.coord().x() - MapObjects.levels().get(0).coord().x() <= HALF_X) {
-				this.visibleCoord().setX(this.coord().x() - MapObjects.levels().get(0).coord().x());
+			if(this.coord().x() - level.coord().x() <= HALF_X) {
+				this.visibleCoord().setX(this.coord().x() - level.coord().x());
 			}
-			else if(this.deltaCoord().x() - MapObjects.levels().get(0).coord().x() < HALF_X && this.coord().x() - MapObjects.levels().get(0).coord().x() > HALF_X) {
-				this.coord().setX(MapObjects.levels().get(0).coord().x() + HALF_X);
+			else if(this.deltaCoord().x() - level.coord().x() < HALF_X && this.coord().x() - level.coord().x() > HALF_X) {
+				this.coord().setX(level.coord().x() + HALF_X);
 				this.visibleCoord().setX(HALF_X);
 			}
 		}
 		else {
-			this.visibleCoord().setX(this.coord().x() - MapObjects.levels().get(0).coord().x());
+			this.visibleCoord().setX(this.coord().x() - level.coord().x());
 		}
 		
-		if(MapObjects.levels().get(0).length().y() > 550) {
+		if(level.length().y() > 550) {
 			if(this.visibleCoord().y() >= HALF_Y) {
-				if(MapObjects.levels().get(0).coord().y() + MapObjects.levels().get(0).length().y() - this.coord().y() <= HALF_Y) {
-					if(MapObjects.levels().get(0).coord().y() + MapObjects.levels().get(0).length().y() - this.coord().y() + this.speed().y()  >= HALF_Y) {
-						MapObjects.levels().get(0).moveVertically(this.deltaCoord().y() - (MapObjects.levels().get(0).length().y() - HALF_Y));
+				if(level.coord().y() + level.length().y() - this.coord().y() <= HALF_Y) {
+					if(level.coord().y() + level.length().y() - this.coord().y() + this.speed().y()  >= HALF_Y) {
+						level.moveVertically(this.deltaCoord().y() - (level.length().y() - HALF_Y));
 					}
-					this.visibleCoord().setY(550 + (this.coord().y() - (MapObjects.levels().get(0).coord().y() + MapObjects.levels().get(0).length().y())));
+					this.visibleCoord().setY(550 + (this.coord().y() - (level.coord().y() + level.length().y())));
 				}
 				else {
 					if(this.visibleCoord().y() > HALF_Y) {
-						this.coord().setY(MapObjects.levels().get(0).coord().y() + MapObjects.levels().get(0).length().y() - HALF_Y);
+						this.coord().setY(level.coord().y() + level.length().y() - HALF_Y);
 						this.visibleCoord().setY(HALF_Y);
 					}
-					else if(this.coord().y() - MapObjects.levels().get(0).coord().y() < HALF_Y) {
-						MapObjects.levels().get(0).moveVertically(this.deltaCoord().y() - HALF_Y);
+					else if(this.coord().y() - level.coord().y() < HALF_Y) {
+						level.moveVertically(this.deltaCoord().y() - HALF_Y);
 					}
 					else {
-						MapObjects.levels().get(0).moveVertically(this.deltaCoord().y() - this.coord().y());
+						level.moveVertically(this.deltaCoord().y() - this.coord().y());
 					}
 				}
 			}
-			if(this.coord().y() - MapObjects.levels().get(0).coord().y() <= HALF_Y) {
-				this.visibleCoord().setY(this.coord().y() - MapObjects.levels().get(0).coord().y());
+			if(this.coord().y() - level.coord().y() <= HALF_Y) {
+				this.visibleCoord().setY(this.coord().y() - level.coord().y());
 			}
-			else if(this.deltaCoord().y() - MapObjects.levels().get(0).coord().y() < HALF_Y && this.coord().y() - MapObjects.levels().get(0).coord().y() > HALF_Y) {
-				this.coord().setY(MapObjects.levels().get(0).coord().y() + HALF_Y);
+			else if(this.deltaCoord().y() - level.coord().y() < HALF_Y && this.coord().y() - level.coord().y() > HALF_Y) {
+				this.coord().setY(level.coord().y() + HALF_Y);
 				this.visibleCoord().setY(HALF_Y);
 			}
 		}
 		else {
-			this.visibleCoord().setY(this.coord().y() - MapObjects.levels().get(0).coord().y());
+			this.visibleCoord().setY(this.coord().y() - level.coord().y());
 		}
 
 		this.deltaCoord().setX(this.coord().x());

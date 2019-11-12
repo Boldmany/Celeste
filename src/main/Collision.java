@@ -14,12 +14,12 @@ public class Collision {
 		}
 	}
 
-	public static void brickCollision(Watermelon character, Brick brick, int i) {
+	public static void brickCollision(Watermelon character, Brick brick) {
 		if(character.coord().x() + character.width() > brick.coord().x() 
 				&& character.coord().x() < brick.coord().x() + brick.width()
 				&& character.coord().y() < brick.coord().y() + brick.height()
 				&& character.coord().y() + character.height() > brick.coord().y()) {
-			
+
 			if(character.speed().y() < 0 && character.coord().y() - character.speed().y() >= brick.coord().y() + brick.height()) { //down
 				character.speed().setY(0);
 				character.coord().setY(brick.coord().y() + brick.height());
@@ -41,29 +41,33 @@ public class Collision {
 		}
 		double changeHitbox = 2;
 		if(character.coord().x() + character.width() + changeHitbox >= brick.coord().x() 
-                && character.coord().x() - changeHitbox <= brick.coord().x() + brick.width()
-                && character.coord().y() <= brick.coord().y() + brick.height()
-                && character.coord().y() + character.height() >= brick.coord().y()) {
-        if(character.coord().x() + character.width() - character.speed().x() <= brick.coord().x()) {
-                character.climb().setCollision(true);
+				&& character.coord().x() - changeHitbox <= brick.coord().x() + brick.width()
+				&& character.coord().y() <= brick.coord().y() + brick.height()
+				&& character.coord().y() + character.height() >= brick.coord().y()) {
+			if(character.coord().x() + character.width() - character.speed().x() <= brick.coord().x()) {
+				character.climb().setCollision(true);
 				character.coord().setX(brick.coord().x() - character.width());
-        }
-        else if(character.coord().x() + character.speed().x() >= brick.coord().x() + brick.width()) {
-                character.climb().setCollision(true);
-                character.coord().setX(brick.coord().x() + brick.width());
-        }
-}
+			}
+			else if(character.coord().x() + character.speed().x() >= brick.coord().x() + brick.width()) {
+				character.climb().setCollision(true);
+				character.coord().setX(brick.coord().x() + brick.width());
+			}
+		}
 	}
 	
-	public void println(String s) {
-		// native code
-	}
-	
-	public void println(int a) {
-		println(a + "");
-	}
-	
-	public void println(Object a) {
-		println(a.toString());
+	public static void nextLevel(Watermelon character, Level level) {
+		if(character.visibleCoord().x() > 850 && level.connection()[1] != 0) {
+			MapObjects.setCurrentLevel(level.connection()[1] - 1);
+			character.visibleCoord().setX(0);
+		}
+		else if(character.visibleCoord().x() < 0 && level.connection()[3] != 0) {
+			MapObjects.setCurrentLevel(level.connection()[3] - 1);
+		}
+		else if(character.visibleCoord().y() < 0 && level.connection()[0] != 0) {
+			MapObjects.setCurrentLevel(level.connection()[0] - 1);
+		}
+		else if(character.visibleCoord().y() > 550 && level.connection()[2] != 0) {
+			MapObjects.setCurrentLevel(level.connection()[2] - 1);
+		}
 	}
 }

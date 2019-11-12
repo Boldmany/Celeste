@@ -4,30 +4,30 @@ import java.util.ArrayList;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import main.Direction;
 import main.Vector;
 
 public class Brick extends Platform {
 	
 	private ArrayList<Spike> spikes = new ArrayList<Spike>();
-	
+
 	public Brick(Vector coord, double width, double height) {
 		super(coord, width, height, Type.SAFE);
 	}
 	
-	public Brick(Vector coord, double width, double height, int direction) {
-		super(coord, width, height, Type.SAFE);
-		if(Direction.has(direction, Direction.UP.getValue())) {
-			this.spikes().add(new Spike(new Vector(coord.x() + 1, coord.y() - 5), width - 2, 5, Type.DEATH));
+	public void addSpike(String s){
+		if(s.contains("up")) {
+			Spike spike = new Spike(new Vector(this.coord().x() + 1, this.coord().y() - 5), this.width() - 2, 5, Type.DEATH);
+			spike.setVisibleCoord(new Vector(spike.coord().x() - this.coord().x(), spike.coord().y() - this.coord().x()));
+			spikes.add(spike);
 		}
-		if(Direction.has(direction, Direction.RIGHT.getValue())) {
-			this.spikes().add(new Spike(new Vector(coord.x() + width, coord.y() + 1), 5, height - 2, Type.DEATH));
+		if(s.contains("right")) {
+			spikes.add(new Spike(new Vector(this.coord().x() + this.width(), this.coord().y() + 1), 5, this.height() - 2, Type.DEATH));
 		}
-		if(Direction.has(direction, Direction.DOWN.getValue())) {
-			this.spikes().add(new Spike(new Vector(coord.x() + 1, coord.y() + height), width - 2, 5, Type.DEATH));
+		if(s.contains("down")) {
+			spikes.add(new Spike(new Vector(this.coord().x() + 1, this.coord().y() + this.height()), this.width() - 2, 5, Type.DEATH));
 		}
-		if(Direction.has(direction, Direction.LEFT.getValue())) {
-			this.spikes().add(new Spike(new Vector(coord.x() - 5, coord.y() + 1), 5, height - 2, Type.DEATH));
+		if(s.contains("left")){
+			spikes.add(new Spike(new Vector(this.coord().x() - 5, this.coord().y() + 1), 5, this.height() - 2, Type.DEATH));
 		}
 	}
 	
@@ -38,11 +38,11 @@ public class Brick extends Platform {
 		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y() + this.height(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
 		gc.strokeLine(this.visibleCoord().x() + this.width(), this.visibleCoord().y(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
 		
-		for(int i = 0; i < this.spikes().size(); i++) {
-			this.spikes().get(i).draw(gc);
+		for(int i = 0; i < spikes.size(); i++) {
+			spikes.get(i).draw(gc);
 		}
 	}
-
+	
 	public ArrayList<Spike> spikes() {
 		return spikes;
 	}

@@ -2,12 +2,23 @@ package main;
 
 import java.util.ArrayList;
 
+import background.Snow;
 import character.Watermelon;
 
 public class MapObjects {
 
 	private static Watermelon watermelon = new Watermelon();
-	private static ArrayList<Level> levels =  new ArrayList<Level>();
+	private static ArrayList<Level> Levels = new ArrayList<Level>();
+	private static int currentLevel = 0;
+	private static ArrayList<Snow> snow = new ArrayList<Snow>();
+	
+	
+	public static void addSnow(){
+		for(int i = 0; i < 30; i++){
+			Snow.createSnow();
+		}
+	}
+
 	
 	public static Watermelon watermelon() {
 		return watermelon;
@@ -17,11 +28,31 @@ public class MapObjects {
 		MapObjects.watermelon = watermelon;
 	}
 
-	public static ArrayList<Level> levels() {
-		return levels;
+	public static ArrayList<Snow> snow() {
+		return snow;
 	}
 
+	public static void setSnow(ArrayList<Snow> snow) {
+		MapObjects.snow = snow;
+	}
+
+
+	public static ArrayList<Level> levels() {
+		return Levels;
+	}
+
+
 	public static void setLevels(ArrayList<Level> levels) {
-		MapObjects.levels = levels;
+		Levels = levels;
+	}
+
+
+	public static int currentLevel() {
+		return currentLevel;
+	}
+
+
+	public static void setCurrentLevel(int currentLevel) {
+		MapObjects.currentLevel = currentLevel;
 	}
 }
