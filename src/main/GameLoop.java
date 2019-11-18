@@ -20,14 +20,15 @@ public class GameLoop implements EventHandler<ActionEvent> {
 			Collision.brickCollision(MapObjects.watermelon(), MapObjects.levels().get(MapObjects.currentLevel()).bricks().get(i));
 		}
 		
+		MapObjects.watermelon().updateVisible(MapObjects.levels().get(MapObjects.currentLevel()));
+		Collision.nextLevel(MapObjects.watermelon(), MapObjects.levels().get(MapObjects.currentLevel()));
+		CharacterAnimation.draw(Main.gc(), MapObjects.watermelon());
+		System.out.println(MapObjects.watermelon().coord().y());
+//		System.out.println(MapObjects.watermelon().visibleCoord().y());
+
 		for(int i = 0; i < MapObjects.snow().size(); i++) {
 			MapObjects.snow().get(i).move();
 			MapObjects.snow().get(i).draw(Main.gc());
 		}
-		
-		MapObjects.watermelon().updateVisible(MapObjects.levels().get(MapObjects.currentLevel()));
-		Collision.nextLevel(MapObjects.watermelon(), MapObjects.levels().get(MapObjects.currentLevel()));
-		System.out.println(MapObjects.watermelon().coord().y());
-		CharacterAnimation.draw(Main.gc(), MapObjects.watermelon());
 	}
 }

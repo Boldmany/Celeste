@@ -36,6 +36,11 @@ public class Brick extends Platform {
 		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y() + this.height(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
 		gc.strokeLine(this.visibleCoord().x() + this.width(), this.visibleCoord().y(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
 		
+		gc.strokeLine(this.coord().x(), this.coord().y(), this.coord().x() + this.width(), this.coord().y());
+		gc.strokeLine(this.coord().x(), this.coord().y(), this.coord().x(), this.coord().y() + this.height());
+		gc.strokeLine(this.coord().x(), this.coord().y() + this.height(), this.coord().x() + this.width(), this.coord().y() + this.height());
+		gc.strokeLine(this.coord().x() + this.width(), this.coord().y(), this.coord().x() + this.width(), this.coord().y() + this.height());
+		
 		for(int i = 0; i < spikes.size(); i++) {
 			spikes.get(i).draw(gc);
 		}

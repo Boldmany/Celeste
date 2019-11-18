@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javafx.scene.canvas.GraphicsContext;
 import map.Brick;
 
 public class Level {
@@ -90,6 +91,19 @@ public class Level {
 				bricks().get(i).spikes().get(j).visibleCoord().setY(bricks().get(i).spikes().get(j).visibleCoord().y() + speed);
 			}
 		}
+	}
+	
+	public void resetVertically() {
+		for(int i = 0; i < this.bricks().size(); i++) {
+			this.bricks().get(i).visibleCoord().setY(this.bricks().get(i).coord().y() + this.coord().y());
+			for(int j = 0; j < this.bricks().get(i).spikes().size(); j++) {
+//				this.bricks().get(i).spikes().get(j).visibleCoord().setY(this.bricks().get(i).spikes().get(j).coord().y() + this.coord().y());
+			}
+		}
+	}
+	
+	public void transitionHorizontally(Direction direction, Level pastLevel, Level currentLevel, GraphicsContext gc) {
+		
 	}
 
 

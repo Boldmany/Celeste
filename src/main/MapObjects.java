@@ -14,7 +14,7 @@ public class MapObjects {
 	
 	
 	public static void addSnow(){
-		for(int i = 0; i < 30; i++){
+		for(int i = 0; i < 40; i++){
 			Snow.createSnow();
 		}
 	}

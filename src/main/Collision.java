@@ -6,10 +6,10 @@ import map.Brick;
 public class Collision {
 	public static int counter = 0;
 	public static void test(Watermelon character) {
-		if(character.coord().y() + character.height() + character.speed().y() > 550 + ((MapObjects.levels().get(0).length().y() - 550))) {
+		if(character.coord().y() + character.height() + character.speed().y() > MapObjects.levels().get(MapObjects.currentLevel()).length().y() + MapObjects.levels().get(MapObjects.currentLevel()).coord().y()) {
 			character.setJump(false);
 			character.speed().setY(0);
-			character.coord().setY(550 + ((MapObjects.levels().get(0).length().y() - character.height()) - 550));
+			character.coord().setY(550 + ((MapObjects.levels().get(MapObjects.currentLevel()).length().y() + MapObjects.levels().get(MapObjects.currentLevel()).coord().y() - character.height()) - 550));
 			character.dash().setCanDash(true);
 		}
 	}
@@ -61,19 +61,34 @@ public class Collision {
 	
 	public static void nextLevel(Watermelon character, Level level) {
 		if(character.visibleCoord().x() > 850 && level.connection()[1] != 0) {
+			level.resetVertically();
 			MapObjects.setCurrentLevel(level.connection()[1] - 1);
 			Level currentLevel = MapObjects.levels().get(MapObjects.currentLevel());
 			character.visibleCoord().setX(0);
-			if(character.coord().y() - currentLevel.coord().y() > currentLevel.length().y() - 275) {
+			if(character.coord().y() > (currentLevel.length().y() - 550) + currentLevel.coord().y()) {
 				currentLevel.moveVertically(550 - currentLevel.length().y());
+				character.visibleCoord().setY(275);
 			}
-			else if(character.coord().y() - currentLevel.coord().y() > 275 
+			else if(character.coord().y() + currentLevel.coord().y() - currentLevel.coord().y() > 275 
 					&& character.coord().y() - currentLevel.coord().y() < 275 + (currentLevel.length().y() - 550)){
-				currentLevel.moveVertically(275 - (character.coord().y() - currentLevel.coord().y()));
+				currentLevel.moveVertically(((currentLevel.coord().y() + 275) - (character.coord().y())));
+				character.visibleCoord().setY(275);
 			}
 		}
 		else if(character.visibleCoord().x() + character.width() < 0 && level.connection()[3] != 0) {
+			level.resetVertically();
 			MapObjects.setCurrentLevel(level.connection()[3] - 1);
+			Level currentLevel = MapObjects.levels().get(MapObjects.currentLevel());
+			character.visibleCoord().setX(850);
+			if(character.coord().y() > (currentLevel.length().y() - 550) + currentLevel.coord().y()) {
+				currentLevel.moveVertically(550 - currentLevel.length().y());
+				character.visibleCoord().setY(275);
+			}
+			else if(character.coord().y() - currentLevel.coord().y() > 275 
+					&& character.coord().y() - currentLevel.coord().y() < 275 + (currentLevel.length().y() - 550)){
+				character.visibleCoord().setY(275);
+				currentLevel.moveVertically(((currentLevel.coord().y() + 275)-(character.coord().y())));
+			}
 		}
 		else if(character.visibleCoord().y() < 0 && level.connection()[0] != 0) {
 			MapObjects.setCurrentLevel(level.connection()[0] - 1);
