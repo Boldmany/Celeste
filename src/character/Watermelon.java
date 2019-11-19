@@ -106,15 +106,18 @@ public class Watermelon extends Character{
 
 		if(level.length().y() > 550) {
 			if(this.coord().y() - level.coord().y() >= HALF_Y) {
-				if(level.coord().y() + level.length().y() - this.coord().y() <= HALF_Y) { // past the point of no return
+				if(level.coord().y() + level.length().y() - this.coord().y() <= HALF_Y) { // exiting down
 					if(level.coord().y() + level.length().y() - this.coord().y() + this.speed().y()  >= HALF_Y) {
 						level.moveVertically(this.deltaCoord().y() - ((level.length().y() + level.coord().y()) - HALF_Y));
 					}
-					System.out.println(this.visibleCoord().y());
 					this.visibleCoord().setY(550 + (this.coord().y() - (level.coord().y() + level.length().y())));
 				}
 				else { // in the point of no return
 					if(this.deltaCoord().y() - level.coord().y() < HALF_Y && this.coord().y() - level.coord().y() > HALF_Y) { // entering down
+						this.coord().setY(level.coord().y() + HALF_Y);
+						this.visibleCoord().setY(HALF_Y);
+					}
+					else if(this.deltaCoord().y() - level.coord().y() > level.length().y() - HALF_Y && this.coord().y() - level.coord().y() < level.length().y() - HALF_Y) { // entering up
 						this.coord().setY(level.length().y() - HALF_Y);
 						this.visibleCoord().setY(HALF_Y);
 					}
@@ -123,7 +126,7 @@ public class Watermelon extends Character{
 					}
 				}
 			}
-			else if(this.deltaCoord().y() - level.coord().y() > HALF_Y) {
+			else if(this.deltaCoord().y() - level.coord().y() > HALF_Y) { // exiting up
 				level.moveVertically(this.deltaCoord().y() - (level.coord().y() + HALF_Y));
 			}
 			if(this.coord().y() - level.coord().y() <= HALF_Y) { // you somehow made it past the point of no return
