@@ -3,6 +3,7 @@ package character;
 import javafx.scene.image.Image;
 import main.Collision;
 import main.Level;
+import main.MapObjects;
 import main.Vector;
 
 public class Watermelon extends Character{
@@ -118,7 +119,7 @@ public class Watermelon extends Character{
 						this.visibleCoord().setY(HALF_Y);
 					}
 					else if(this.deltaCoord().y() - level.coord().y() > level.length().y() - HALF_Y && this.coord().y() - level.coord().y() < level.length().y() - HALF_Y) { // entering up
-						this.coord().setY(level.length().y() - HALF_Y);
+						this.coord().setY(level.coord().y() + level.length().y() - HALF_Y);
 						this.visibleCoord().setY(HALF_Y);
 					}
 					else {

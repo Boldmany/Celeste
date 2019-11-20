@@ -25,6 +25,7 @@ public class GameLoop implements EventHandler<ActionEvent> {
 		CharacterAnimation.draw(Main.gc(), MapObjects.watermelon());
 		System.out.println(MapObjects.watermelon().coord().y());
 //		System.out.println(MapObjects.watermelon().visibleCoord().y());
+//		System.out.println(MapObjects.levels().get(MapObjects.currentLevel()).bricks().get(0).visibleCoord().y());
 
 		for(int i = 0; i < MapObjects.snow().size(); i++) {
 			MapObjects.snow().get(i).move();

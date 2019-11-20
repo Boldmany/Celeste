@@ -1,4 +1,4 @@
 coord 1000 300
 length 1000 850
-brick 000 100 400 100 right left
+brick 000 200 400 100 right left
 left 1

@@ -65,22 +65,25 @@ public class Collision {
 			MapObjects.setCurrentLevel(level.connection()[1] - 1);
 			Level currentLevel = MapObjects.levels().get(MapObjects.currentLevel());
 			character.visibleCoord().setX(0);
-			if(character.coord().y() > (currentLevel.length().y() - 550) + currentLevel.coord().y()) {
+			
+			if(character.coord().y() - currentLevel.coord().y() >= currentLevel.length().y() - 275) {
 				currentLevel.moveVertically(550 - currentLevel.length().y());
-				character.visibleCoord().setY(275);
+				System.out.println("whattttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
 			}
-			else if(character.coord().y() + currentLevel.coord().y() - currentLevel.coord().y() > 275 
-					&& character.coord().y() - currentLevel.coord().y() < 275 + (currentLevel.length().y() - 550)){
+			else if(character.coord().y() - currentLevel.coord().y() > 275 
+					&& character.coord().y() - currentLevel.coord().y() < currentLevel.length().y() - 275){
 				currentLevel.moveVertically(((currentLevel.coord().y() + 275) - (character.coord().y())));
 				character.visibleCoord().setY(275);
+//				System.out.println("whattttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
 			}
+			
 		}
 		else if(character.visibleCoord().x() + character.width() < 0 && level.connection()[3] != 0) {
 			level.resetVertically();
 			MapObjects.setCurrentLevel(level.connection()[3] - 1);
 			Level currentLevel = MapObjects.levels().get(MapObjects.currentLevel());
 			character.visibleCoord().setX(850);
-			if(character.coord().y() > (currentLevel.length().y() - 550) + currentLevel.coord().y()) {
+			if(character.coord().y() -  currentLevel.coord().y() > currentLevel.length().y() - 275) {
 				currentLevel.moveVertically(550 - currentLevel.length().y());
 				character.visibleCoord().setY(275);
 			}
