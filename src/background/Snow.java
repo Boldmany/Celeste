@@ -1,8 +1,5 @@
 package background;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import main.Main;

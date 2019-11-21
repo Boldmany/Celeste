@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import character.Watermelon;
 import javafx.scene.canvas.GraphicsContext;
 import map.Brick;
 
@@ -59,13 +60,13 @@ public class Level {
 				}
 				else if(fields[0].equals("down")){
 					int level = Integer.parseInt(fields[1]);
-					MapObjects.levels().get(level - 1).connection()[2] = this.index();
-					this.connection()[0] = level;
-				}
-				else if(fields[0].equals("right")){
-					int level = Integer.parseInt(fields[1]);
 					MapObjects.levels().get(level - 1).connection()[0] = this.index();
 					this.connection()[2] = level;
+				}
+				else if(fields[0].equals("up")){
+					int level = Integer.parseInt(fields[1]);
+					MapObjects.levels().get(level - 1).connection()[2] = this.index();
+					this.connection()[0] = level;
 				}
 			}
 		} 
@@ -95,15 +96,52 @@ public class Level {
 	
 	public void resetVertically() {
 		for(int i = 0; i < this.bricks().size(); i++) {
-			this.bricks().get(i).visibleCoord().setY(this.bricks().get(i).coord().y() + this.coord().y());
+			this.bricks().get(i).visibleCoord().setY(this.bricks().get(i).coord().y() - this.coord().y());
 			for(int j = 0; j < this.bricks().get(i).spikes().size(); j++) {
-//				this.bricks().get(i).spikes().get(j).visibleCoord().setY(this.bricks().get(i).spikes().get(j).coord().y() + this.coord().y());
+				this.bricks().get(i).spikes().get(j).visibleCoord().setY(this.bricks().get(i).spikes().get(j).coord().y() - this.coord().y());
 			}
 		}
 	}
 	
-	public void transitionHorizontally(Direction direction, Level pastLevel, Level currentLevel, GraphicsContext gc) {
+	public void resetHorizontally() {
+		for(int i = 0; i < this.bricks().size(); i++) {
+			this.bricks().get(i).visibleCoord().setX(this.bricks().get(i).coord().x() - this.coord().x());
+			for(int j = 0; j < this.bricks().get(i).spikes().size(); j++) {
+				this.bricks().get(i).spikes().get(j).visibleCoord().setX(this.bricks().get(i).spikes().get(j).coord().x() - this.coord().x());
+			}
+		}
+	}
+	
+	public void nextHorizontalLevel(Watermelon character) {
+		this.resetVertically();
+		character.deltaCoord().setY(character.coord().y());
 		
+		Level newLevel = MapObjects.levels().get(MapObjects.currentLevel());
+		
+		if(character.coord().y() - newLevel.coord().y() >= newLevel.length().y() - 275) {
+			newLevel.moveVertically(550 - newLevel.length().y());
+		}
+		else if(character.coord().y() - newLevel.coord().y() > 275 
+				&& character.coord().y() - newLevel.coord().y() < newLevel.length().y() - 275){
+			newLevel.moveVertically(((newLevel.coord().y() + 275) - (character.coord().y())));
+			character.visibleCoord().setY(275);
+		}
+	}
+	
+	public void nextVerticalLevel(Watermelon character) {
+		this.resetHorizontally();
+		character.deltaCoord().setX(character.coord().x());
+		
+		Level newLevel = MapObjects.levels().get(MapObjects.currentLevel());
+		
+		if(character.coord().x() - newLevel.coord().x() >= newLevel.length().x() - 425) {
+			newLevel.moveVertically(850 - newLevel.length().y());
+		}
+		else if(character.coord().x() - newLevel.coord().x() > 425
+				&& character.coord().x() - newLevel.coord().x() < newLevel.length().x() - 425){
+			newLevel.moveVertically(((newLevel.coord().x() + 425) - (character.coord().x())));
+			character.visibleCoord().setY(425);
+		}
 	}
 
 

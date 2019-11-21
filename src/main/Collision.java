@@ -61,43 +61,24 @@ public class Collision {
 	
 	public static void nextLevel(Watermelon character, Level level) {
 		if(character.visibleCoord().x() > 850 && level.connection()[1] != 0) {
-			level.resetVertically();
 			MapObjects.setCurrentLevel(level.connection()[1] - 1);
-			Level currentLevel = MapObjects.levels().get(MapObjects.currentLevel());
 			character.visibleCoord().setX(0);
-			
-			if(character.coord().y() - currentLevel.coord().y() >= currentLevel.length().y() - 275) {
-				currentLevel.moveVertically(550 - currentLevel.length().y());
-				System.out.println("whattttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
-			}
-			else if(character.coord().y() - currentLevel.coord().y() > 275 
-					&& character.coord().y() - currentLevel.coord().y() < currentLevel.length().y() - 275){
-				currentLevel.moveVertically(((currentLevel.coord().y() + 275) - (character.coord().y())));
-				character.visibleCoord().setY(275);
-//				System.out.println("whattttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
-			}
-			
+			level.nextHorizontalLevel(character);
 		}
 		else if(character.visibleCoord().x() + character.width() < 0 && level.connection()[3] != 0) {
-			level.resetVertically();
 			MapObjects.setCurrentLevel(level.connection()[3] - 1);
-			Level currentLevel = MapObjects.levels().get(MapObjects.currentLevel());
 			character.visibleCoord().setX(850);
-			if(character.coord().y() -  currentLevel.coord().y() > currentLevel.length().y() - 275) {
-				currentLevel.moveVertically(550 - currentLevel.length().y());
-				character.visibleCoord().setY(275);
-			}
-			else if(character.coord().y() - currentLevel.coord().y() > 275 
-					&& character.coord().y() - currentLevel.coord().y() < 275 + (currentLevel.length().y() - 550)){
-				character.visibleCoord().setY(275);
-				currentLevel.moveVertically(((currentLevel.coord().y() + 275)-(character.coord().y())));
-			}
+			level.nextHorizontalLevel(character);
 		}
 		else if(character.visibleCoord().y() < 0 && level.connection()[0] != 0) {
 			MapObjects.setCurrentLevel(level.connection()[0] - 1);
+			character.visibleCoord().setY(505);
+			level.nextVerticalLevel(character);
 		}
 		else if(character.visibleCoord().y() > 550 && level.connection()[2] != 0) {
-			MapObjects.setCurrentLevel(level.connection()[2] - 1);
+			MapObjects.setCurrentLevel(level.connection()[0] - 1);
+			character.visibleCoord().setY(0);
+			level.nextVerticalLevel(character);
 		}
 	}
 }

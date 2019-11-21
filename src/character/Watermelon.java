@@ -3,7 +3,6 @@ package character;
 import javafx.scene.image.Image;
 import main.Collision;
 import main.Level;
-import main.MapObjects;
 import main.Vector;
 
 public class Watermelon extends Character{
@@ -70,30 +69,75 @@ public class Watermelon extends Character{
 		final double HALF_X = 425.0;
 		final double HALF_Y = 275.0;
 
-		if(level.length().x() > 850) {
-			if(this.visibleCoord().x() >= HALF_X) {
-				if(level.coord().x() + level.length().x() - this.coord().x() <= HALF_X) {
-					if(level.coord().x() + level.length().x() - this.coord().x() + (this.moving()[0] * this.speed().x())  >= HALF_X) {
-						level.moveHorizontally((this.deltaCoord().x() - level.coord().x()) - ((level.length().x()) - HALF_X));
+//		if(level.length().x() > 850) {
+//			if(this.visibleCoord().x() >= HALF_X) {
+//				if(level.coord().x() + level.length().x() - this.coord().x() <= HALF_X) {
+//					if(level.coord().x() + level.length().x() - this.coord().x() + (this.moving()[0] * this.speed().x())  >= HALF_X) {
+//						level.moveHorizontally((this.deltaCoord().x() - level.coord().x()) - ((level.length().x()) - HALF_X));
+//					}
+//					this.visibleCoord().setX(850 - (level.coord().x() + level.length().x() - this.coord().x()));
+//				}
+//				else {
+//					if(this.visibleCoord().x() > HALF_X) {
+//						this.coord().setX(level.coord().x() + level.length().x() - HALF_X);
+//						this.visibleCoord().setX(HALF_X);
+//					}
+//					else if(this.coord().x() - level.coord().x() < HALF_X) {
+////						System.out.println("???????????????????????????????????????????????????????????????????????????????????");
+//						level.moveHorizontally((this.deltaCoord().x() - level.coord().x()) - HALF_X);
+//					}
+//					else {
+//						level.moveHorizontally(this.deltaCoord().x() - this.coord().x());
+//					}
+//				}
+//			}
+//
+//			if(this.coord().x() - level.coord().x() <= HALF_X) {
+//				this.visibleCoord().setX(this.coord().x() - level.coord().x());
+//			}
+//			else if(this.deltaCoord().x() - level.coord().x() < HALF_X && this.coord().x() - level.coord().x() > HALF_X) {
+//				this.coord().setX(level.coord().x() + HALF_X);
+//				this.visibleCoord().setX(HALF_X);
+//			}
+//		}
+//		else {
+//			this.visibleCoord().setX(this.coord().x() - level.coord().x());
+//		}
+		
+		if(level.length().x() > HALF_X * 2) {
+			if(this.coord().x() - level.coord().x() > HALF_X) {
+				if(this.coord().x() - level.coord().x() > level.length().x() - HALF_X) { // exiting down
+					if(this.deltaCoord().x() - level.coord().x() < level.length().x() - HALF_X) {
+						level.moveHorizontally(this.deltaCoord().x() - ((level.length().x() + level.coord().x()) - HALF_X));
+//						System.out.println("yes");
 					}
-					this.visibleCoord().setX(850 - (level.coord().x() + level.length().x() - this.coord().x()));
+					this.visibleCoord().setX(HALF_X * 2 + (this.coord().x() - (level.coord().x() + level.length().x())));
 				}
-				else {
-					if(this.visibleCoord().x() > HALF_X) {
-						this.coord().setX(level.coord().x() + level.length().x() - HALF_X);
+				else { // in the point of no return
+					if(this.deltaCoord().x() - level.coord().x() < HALF_X) { // entering right
 						this.visibleCoord().setX(HALF_X);
+//						System.out.println(level.bricks().get(0).coord().x() - level.bricks().get(0).visibleCoord().x());
+						level.moveHorizontally(HALF_X - (this.coord().x() - level.coord().x()));
+//						System.out.println(level.bricks().get(0).coord().x() - level.bricks().get(0).visibleCoord().x());
 					}
-					else if(this.coord().x() - level.coord().x() < HALF_X) {
-//						System.out.println("???????????????????????????????????????????????????????????????????????????????????");
-						level.moveHorizontally((this.deltaCoord().x() - level.coord().x()) - HALF_X);
+					else if(this.deltaCoord().x() - level.coord().x() > level.length().x() - HALF_X && this.coord().x() - level.coord().x() < level.length().x() - HALF_X) { // entering left
+						this.visibleCoord().setX(HALF_X);
+						level.moveHorizontally((this.deltaCoord().x() - level.coord().x()) - (level.length().x() - HALF_X));
 					}
 					else {
 						level.moveHorizontally(this.deltaCoord().x() - this.coord().x());
+//						System.out.println("nani");
 					}
 				}
 			}
-
-			if(this.coord().x() - level.coord().x() <= HALF_X) {
+			else if(this.deltaCoord().x() - level.coord().x() > HALF_X) { // exiting left
+				System.out.println(level.bricks().get(0).coord().x() - level.bricks().get(0).visibleCoord().x());
+				level.moveHorizontally(this.coord().x() - (level.coord().x() + HALF_X));
+				System.out.println(level.bricks().get(0).coord().x() - level.bricks().get(0).visibleCoord().x());
+//				System.out.println("whatttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
+//				System.out.println("what");
+			}
+			if(this.coord().x() - level.coord().x() <= HALF_X) { // you somehow made it past the point of no return
 				this.visibleCoord().setX(this.coord().x() - level.coord().x());
 			}
 			else if(this.deltaCoord().x() - level.coord().x() < HALF_X && this.coord().x() - level.coord().x() > HALF_X) {
@@ -104,14 +148,15 @@ public class Watermelon extends Character{
 		else {
 			this.visibleCoord().setX(this.coord().x() - level.coord().x());
 		}
-
-		if(level.length().y() > 550) {
+		
+		
+		if(level.length().y() > HALF_Y * 2) {
 			if(this.coord().y() - level.coord().y() >= HALF_Y) {
 				if(level.coord().y() + level.length().y() - this.coord().y() <= HALF_Y) { // exiting down
 					if(level.coord().y() + level.length().y() - this.coord().y() + this.speed().y()  >= HALF_Y) {
 						level.moveVertically(this.deltaCoord().y() - ((level.length().y() + level.coord().y()) - HALF_Y));
 					}
-					this.visibleCoord().setY(550 + (this.coord().y() - (level.coord().y() + level.length().y())));
+					this.visibleCoord().setY(HALF_Y * 2 + (this.coord().y() - (level.coord().y() + level.length().y())));
 				}
 				else { // in the point of no return
 					if(this.deltaCoord().y() - level.coord().y() < HALF_Y && this.coord().y() - level.coord().y() > HALF_Y) { // entering down
@@ -141,6 +186,7 @@ public class Watermelon extends Character{
 		else {
 			this.visibleCoord().setY(this.coord().y() - level.coord().y());
 		}
+		
 		this.deltaCoord().setX(this.coord().x());
 		this.deltaCoord().setY(this.coord().y());
 	}

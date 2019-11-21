@@ -25,6 +25,7 @@ public class Main extends Application{
 	public static void main(String[] args) {
 		MapObjects.levels().add(new Level(1));
 		MapObjects.levels().add(new Level(2));
+		MapObjects.levels().add(new Level(3));
 		MapObjects.addSnow();
 		launch(args);
 	}
