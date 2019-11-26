@@ -23,6 +23,7 @@ public class GameLoop implements EventHandler<ActionEvent> {
 		Collision.nextLevel(MapObjects.watermelon(), MapObjects.levels().get(MapObjects.currentLevel()));
 		MapObjects.watermelon().updateVisible(MapObjects.levels().get(MapObjects.currentLevel()));
 		CharacterAnimation.draw(Main.gc(), MapObjects.watermelon());
+//		Main.gc().drawImage(MapObjects.watermelon().animation().dash().images().get(0), MapObjects.watermelon().coord().x(), MapObjects.watermelon().coord().y());
 //		System.out.println(MapObjects.watermelon().coord().y());
 //		System.out.println(MapObjects.watermelon().visibleCoord().y());
 //		System.out.println(MapObjects.watermelon().coord().x());

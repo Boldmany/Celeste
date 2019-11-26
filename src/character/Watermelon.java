@@ -105,10 +105,12 @@ public class Watermelon extends Character{
 //		}
 		
 		if(level.length().x() > HALF_X * 2) {
-			if(this.coord().x() - level.coord().x() > HALF_X) {
-				if(this.coord().x() - level.coord().x() > level.length().x() - HALF_X) { // exiting down
+			if(this.coord().x() - level.coord().x() >= HALF_X) {
+				if(this.coord().x() - level.coord().x() > level.length().x() - HALF_X) { // exiting right
 					if(this.deltaCoord().x() - level.coord().x() < level.length().x() - HALF_X) {
-						level.moveHorizontally(this.deltaCoord().x() - ((level.length().x() + level.coord().x()) - HALF_X));
+						System.out.println(level.bricks().get(0).coord().x() - level.bricks().get(0).visibleCoord().x());
+						level.moveHorizontally((this.deltaCoord().x() - level.coord().x()) - ((level.length().x() ) - HALF_X));
+						System.out.println(level.bricks().get(0).coord().x() - level.bricks().get(0).visibleCoord().x());
 //						System.out.println("yes");
 					}
 					this.visibleCoord().setX(HALF_X * 2 + (this.coord().x() - (level.coord().x() + level.length().x())));
@@ -116,9 +118,7 @@ public class Watermelon extends Character{
 				else { // in the point of no return
 					if(this.deltaCoord().x() - level.coord().x() < HALF_X) { // entering right
 						this.visibleCoord().setX(HALF_X);
-//						System.out.println(level.bricks().get(0).coord().x() - level.bricks().get(0).visibleCoord().x());
 						level.moveHorizontally(HALF_X - (this.coord().x() - level.coord().x()));
-//						System.out.println(level.bricks().get(0).coord().x() - level.bricks().get(0).visibleCoord().x());
 					}
 					else if(this.deltaCoord().x() - level.coord().x() > level.length().x() - HALF_X && this.coord().x() - level.coord().x() < level.length().x() - HALF_X) { // entering left
 						this.visibleCoord().setX(HALF_X);
@@ -126,23 +126,14 @@ public class Watermelon extends Character{
 					}
 					else {
 						level.moveHorizontally(this.deltaCoord().x() - this.coord().x());
-//						System.out.println("nani");
 					}
 				}
 			}
 			else if(this.deltaCoord().x() - level.coord().x() > HALF_X) { // exiting left
-				System.out.println(level.bricks().get(0).coord().x() - level.bricks().get(0).visibleCoord().x());
-				level.moveHorizontally(this.coord().x() - (level.coord().x() + HALF_X));
-				System.out.println(level.bricks().get(0).coord().x() - level.bricks().get(0).visibleCoord().x());
-//				System.out.println("whatttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
-//				System.out.println("what");
+				level.moveHorizontally((this.deltaCoord().x() - level.coord().x()) - HALF_X);
 			}
 			if(this.coord().x() - level.coord().x() <= HALF_X) { // you somehow made it past the point of no return
 				this.visibleCoord().setX(this.coord().x() - level.coord().x());
-			}
-			else if(this.deltaCoord().x() - level.coord().x() < HALF_X && this.coord().x() - level.coord().x() > HALF_X) {
-				this.coord().setX(level.coord().x() + HALF_X);
-				this.visibleCoord().setX(HALF_X);
 			}
 		}
 		else {
@@ -175,7 +166,7 @@ public class Watermelon extends Character{
 			else if(this.deltaCoord().y() - level.coord().y() > HALF_Y) { // exiting up
 				level.moveVertically(this.deltaCoord().y() - (level.coord().y() + HALF_Y));
 			}
-			if(this.coord().y() - level.coord().y() <= HALF_Y) { // you somehow made it past the point of no return
+			if(this.coord().y() - level.coord().y() <= HALF_Y) { // you some how made it past the point of no return
 				this.visibleCoord().setY(this.coord().y() - level.coord().y());
 			}
 			else if(this.deltaCoord().y() - level.coord().y() < HALF_Y && this.coord().y() - level.coord().y() > HALF_Y) {
