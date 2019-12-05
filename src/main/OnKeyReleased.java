@@ -11,24 +11,24 @@ public class OnKeyReleased implements EventHandler<KeyEvent>{
 	 */
 	public void handle(KeyEvent key) {
 		
-		if(key.getCode() == KeyCode.RIGHT && MapObjects.watermelon().moving()[0] == 1) {
-			MapObjects.watermelon().moving()[0] = 0;
+		if(key.getCode() == KeyCode.RIGHT && Map.watermelon().moving()[0] == 1) {
+			Map.watermelon().moving()[0] = 0;
 		}
-		if(key.getCode() == KeyCode.LEFT && MapObjects.watermelon().moving()[0] == -1) {
-			MapObjects.watermelon().moving()[0] = 0;
+		if(key.getCode() == KeyCode.LEFT && Map.watermelon().moving()[0] == -1) {
+			Map.watermelon().moving()[0] = 0;
 		}
-		if(key.getCode() == KeyCode.UP && MapObjects.watermelon().moving()[1] == -1) {
-			MapObjects.watermelon().moving()[1] = 0;
+		if(key.getCode() == KeyCode.UP && Map.watermelon().moving()[1] == -1) {
+			Map.watermelon().moving()[1] = 0;
 		}
-		if(key.getCode() == KeyCode.DOWN && MapObjects.watermelon().moving()[1] == 1) {
-			MapObjects.watermelon().moving()[1] = 0;
+		if(key.getCode() == KeyCode.DOWN && Map.watermelon().moving()[1] == 1) {
+			Map.watermelon().moving()[1] = 0;
 		}
 		if(key.getCode() == KeyCode.C) {
 		}
 		if(key.getCode() == KeyCode.Z) {
-			MapObjects.watermelon().climb().setGrab(false);
-			MapObjects.watermelon().climb().setClimbing(false);
-			MapObjects.watermelon().climb().setCanClimb(true);
+			Map.watermelon().climb().setGrab(false);
+			Map.watermelon().climb().setClimbing(false);
+			Map.watermelon().climb().setCanClimb(true);
 		}
 	}
 }

@@ -2,8 +2,7 @@ package background;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import main.Main;
-import main.MapObjects;
+import main.Map;
 import main.Vector;
 
 public class Snow {
@@ -23,7 +22,7 @@ public class Snow {
 		this.coord().setY(this.speed().y() + this.coord().y());
 		if(this.coord().x() > 850 || this.coord().y() > 550){
 			createSnow();
-			MapObjects.snow().remove(this);
+			Map.snow().remove(this);
 			
 		}
 	}
@@ -34,12 +33,12 @@ public class Snow {
 		Vector speed = new Vector((int) (Math.random() * 10 + 7), (int) (Math.random() * 5 + 3));
 		if(side == 1){
 			Vector coord = new Vector(-radius, (int) (Math.random() * 475 + 1));
-			MapObjects.snow().add(new Snow(radius, coord, speed));
+			Map.snow().add(new Snow(radius, coord, speed));
 
 		}
 		else {
 			Vector coord = new Vector((int) (Math.random() * 500 + 1), -radius);
-			MapObjects.snow().add(new Snow(radius, coord, speed));
+			Map.snow().add(new Snow(radius, coord, speed));
 		}
 	}
 	

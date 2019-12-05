@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import background.Snow;
 import character.Watermelon;
 
-public class MapObjects {
+public class Map {
 
 	private static Watermelon watermelon = new Watermelon();
 	private static ArrayList<Level> Levels = new ArrayList<Level>();
@@ -25,7 +25,7 @@ public class MapObjects {
 	}
 
 	public static void setWatermelon(Watermelon watermelon) {
-		MapObjects.watermelon = watermelon;
+		Map.watermelon = watermelon;
 	}
 
 	public static ArrayList<Snow> snow() {
@@ -33,7 +33,7 @@ public class MapObjects {
 	}
 
 	public static void setSnow(ArrayList<Snow> snow) {
-		MapObjects.snow = snow;
+		Map.snow = snow;
 	}
 
 
@@ -53,6 +53,6 @@ public class MapObjects {
 
 
 	public static void setCurrentLevel(int currentLevel) {
-		MapObjects.currentLevel = currentLevel;
+		Map.currentLevel = currentLevel;
 	}
 }

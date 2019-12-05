@@ -5,7 +5,7 @@ import main.Timer;
 public class Dash {
 	
 	private boolean canDash = true;
-	private Timer dashDuration = new Timer(9);
+	private Timer dashDuration = new Timer(11);
 	
 	public boolean canDash() {
 		return canDash;

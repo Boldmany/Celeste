@@ -7,7 +7,8 @@ public class Climb {
 	private boolean climbing = false;
 	private boolean canClimb = false;
 	private boolean collision = false;
-	private Timer energy = new Timer(10);
+	private int energy = 11;
+	private Timer tired = new Timer(50);
 	
 	public boolean grab() {
 		return grab;
@@ -22,12 +23,6 @@ public class Climb {
 		this.climbing = climbing;
 	}
 
-	public Timer energy() {
-		return energy;
-	}
-	public void setEnergy(Timer energy) {
-		this.energy = energy;
-	}
 	public boolean canClimb() {
 		return canClimb;
 	}
@@ -39,5 +34,17 @@ public class Climb {
 	}
 	public void setCollision(boolean collision) {
 		this.collision = collision;
+	}
+	public int energy() {
+		return energy;
+	}
+	public void setEnergy(int energy) {
+		this.energy = energy;
+	}
+	public Timer tired() {
+		return tired;
+	}
+	public void setTired(Timer tired) {
+		this.tired = tired;
 	}
 }

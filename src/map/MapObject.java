@@ -2,23 +2,19 @@ package map;
 import main.Vector;
 
 
-public class Platform {
+public class MapObject {
 	private Vector coord = new Vector(0, 0);
 	private Vector visibleCoord = new Vector(0, 0);
 	private double height = 0;
 	private double width = 0;
 	private Type type;
 	
-	public Platform(Vector coord, Vector visibleCoord, double width, double height, Type type) {
+	public MapObject(Vector coord, Vector visibleCoord, double width, double height, Type type) {
 		this.setCoord(coord);
 		this.setVisibleCoord(visibleCoord);
 		this.setWidth(width);
 		this.setHeight(height);
 		this.setType(type);
-	}
-
-	public void collision(Character character) {
-		
 	}
 
 	public double height() {

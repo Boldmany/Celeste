@@ -23,10 +23,10 @@ public class Main extends Application{
 	private static int gameState = 0;
 	
 	public static void main(String[] args) {
-		MapObjects.levels().add(new Level(1));
-		MapObjects.levels().add(new Level(2));
-		MapObjects.levels().add(new Level(3));
-		MapObjects.addSnow();
+		Map.levels().add(new Level(1));
+		Map.levels().add(new Level(2));
+		Map.levels().add(new Level(3));
+		Map.addSnow();
 		launch(args);
 	}
 
