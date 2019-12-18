@@ -1,4 +1,6 @@
 package map;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import main.Vector;
 
 
@@ -16,7 +18,15 @@ public class MapObject {
 		this.setHeight(height);
 		this.setType(type);
 	}
-
+	
+	public void draw(GraphicsContext gc, Color color) {
+		gc.setStroke(color);
+		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y(), this.visibleCoord().x() + this.width(), this.visibleCoord().y());
+		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y(), this.visibleCoord().x(), this.visibleCoord().y() + this.height());
+		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y() + this.height(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
+		gc.strokeLine(this.visibleCoord().x() + this.width(), this.visibleCoord().y(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
+	}
+	
 	public double height() {
 		return height;
 	}

@@ -3,6 +3,7 @@ package character;
 import javafx.scene.image.Image;
 import main.Collision;
 import main.Level;
+import main.Map;
 import main.Vector;
 
 public class Watermelon extends Character{
@@ -54,6 +55,8 @@ public class Watermelon extends Character{
 		
 		this.climb().setEnergy(10);
 		this.climb().tired().resetFrames();
+		this.climb().setClimbing(false);
+		this.climb().setCollision(false);
 		
 		level.resetHorizontally();
 		level.resetVertically();
@@ -129,9 +132,11 @@ public class Watermelon extends Character{
 		
 		if(level.length().y() > HALF_Y * 2) {
 			if(this.coord().y() - level.coord().y() >= HALF_Y) {
-				if(this.coord().y() - level.coord().y() > level.length().y() - HALF_Y) { // eyiting right
+				if(this.coord().y() - level.coord().y() > level.length().y() - HALF_Y) { // exiting down
 					if(this.deltaCoord().y() - level.coord().y() <= level.length().y() - HALF_Y) {
+						System.out.println(Map.levels().get(0).mapObjects().get(0).visibleCoord().y() - Map.levels().get(0).mapObjects().get(0).coord().y());
 						level.moveVertically((this.deltaCoord().y() - level.coord().y()) - (level.length().y() - HALF_Y));
+						System.out.println(Map.levels().get(0).mapObjects().get(0).visibleCoord().y() - Map.levels().get(0).mapObjects().get(0).coord().y());
 					}
 					this.visibleCoord().setY(HALF_Y * 2 + (this.coord().y() - (level.coord().y() + level.length().y())));
 				}
@@ -149,7 +154,7 @@ public class Watermelon extends Character{
 					}
 				}
 			}
-			else if(this.deltaCoord().y() - level.coord().y() > HALF_Y) { // eyiting left
+			else if(this.deltaCoord().y() - level.coord().y() > HALF_Y) { // exiting up
 				level.moveVertically((this.deltaCoord().y() - level.coord().y()) - HALF_Y);
 			}
 			if(this.coord().y() - level.coord().y() <= HALF_Y) { // you somehow made it past the point of no return

@@ -1,5 +1,6 @@
 coord 0 0
 length 1000 1000
 brick 275 300 555 100 right left
-brick 275 300 100 555
+brick 275 300 100 500
 crystal 100 300
+flat 100 400 100

@@ -76,8 +76,13 @@ public class Collision {
 	}
 	
 	public static void flatCollision(Watermelon character, MapObject flat) {
-		if(character.coord().y() + character.height() > flat.coord().y()
-				&& character.speed().y() > 0 && character.coord().y() + character.height()  - character.speed().y() <= flat.coord().y()) {
+		if(character.coord().x() + character.width() > flat.coord().x() 
+				&& character.coord().x() < flat.coord().x() + flat.width()
+				&& character.coord().y() < flat.coord().y() + flat.height()
+				&& character.coord().y() + character.height() > flat.coord().y()
+				&& character.speed().y() > 0 
+				&& character.coord().y() + character.height()  - character.speed().y() <= flat.coord().y()) {
+			
 				character.speed().setY(0);
 				character.coord().setY(flat.coord().y() - character.height());
 				character.setJump(false);
@@ -91,7 +96,7 @@ public class Collision {
 				&& character.coord().x() < spike.coord().x() + spike.width()
 				&& character.coord().y() < spike.coord().y() + spike.height()
 				&& character.coord().y() + character.height() > spike.coord().y()) {
-			character.death(Map.levels().get(Map.currentLevel()));
+//			character.death(Map.levels().get(Map.currentLevel()));
 		}
 	}
 	

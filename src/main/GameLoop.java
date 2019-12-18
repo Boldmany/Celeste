@@ -4,6 +4,7 @@ import character.CharacterAnimation;
 import character.Watermelon;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.paint.Color;
 import map.*;
 
 public class GameLoop implements EventHandler<ActionEvent> {
@@ -18,33 +19,41 @@ public class GameLoop implements EventHandler<ActionEvent> {
 		Watermelon character = Map.watermelon();
 		character.move();
 		character.climb().setCollision(false);
-		System.out.println(character.climb().energy());
 		
-		for(int i = 0; i < Map.levels().get(Map.currentLevel()).bricks().size(); i++) {
-			Brick brick = Map.levels().get(Map.currentLevel()).bricks().get(i);
-			brick.draw(Main.gc());
-			
-			Collision.brickCollision(character, brick);
-			
-			for(int j = 0; j < brick.spikes().size(); j++) {
-				Collision.spike(character, brick.spikes().get(j));
+		for(int i = 0; i < Map.levels().get(Map.currentLevel()).mapObjects().size(); i++) {
+			if(Map.levels().get(Map.currentLevel()).mapObjects().get(i) instanceof Brick) {
+				Brick brick = (Brick) Map.levels().get(Map.currentLevel()).mapObjects().get(i);
+				brick.draw(Main.gc(), Color.BLACK);
+				
+				Collision.brickCollision(character, brick);
+				
+				for(int j = 0; j < brick.spikes().size(); j++) {
+					brick.spikes().get(j).draw(Main.gc(), Color.RED);
+					Collision.spike(character, brick.spikes().get(j));
+				}
 			}
-		}
-		
-		for(int i = 0; i < Map.levels().get(Map.currentLevel()).crystals().size(); i++) {
-			Crystal crystal = Map.levels().get(Map.currentLevel()).crystals().get(i);
-			if(crystal.respawn().complete()) {
-				crystal.draw(Main.gc());
-				Collision.crystal(character, crystal);
+			else if(Map.levels().get(Map.currentLevel()).mapObjects().get(i) instanceof Flat) {
+				Flat flat = (Flat) Map.levels().get(Map.currentLevel()).mapObjects().get(i);
+				flat.draw(Main.gc(), Color.BROWN);
+				
+				Collision.flatCollision(character, flat);
 			}
-			else {
-				crystal.respawn().update();
+			else if(Map.levels().get(Map.currentLevel()).mapObjects().get(i) instanceof Crystal) {
+				Crystal crystal = (Crystal) Map.levels().get(Map.currentLevel()).mapObjects().get(i);
+				if(crystal.respawn().complete()) {
+					crystal.draw(Main.gc(), Color.GREEN);
+					Collision.crystal(character, crystal);
+				}
+				else {
+					crystal.respawn().update();
+				}
 			}
 		}
 
 		Collision.nextLevel(character, Map.levels().get(Map.currentLevel()));
 		character.updateVisible(Map.levels().get(Map.currentLevel()));
 		CharacterAnimation.draw(Main.gc(), character);
+		Main.gc().drawImage(character.animation().dash().images().get(0), character.coord().x(), character.coord().y());
 		
 		if(character.climb().tired().complete()) {
 			character.climb().setEnergy(character.climb().energy() - 1);

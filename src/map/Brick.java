@@ -29,18 +29,6 @@ public class Brick extends MapObject {
 		}
 	}
 	
-	public void draw(GraphicsContext gc) {
-		gc.setStroke(Color.BLACK);
-		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y(), this.visibleCoord().x() + this.width(), this.visibleCoord().y());
-		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y(), this.visibleCoord().x(), this.visibleCoord().y() + this.height());
-		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y() + this.height(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
-		gc.strokeLine(this.visibleCoord().x() + this.width(), this.visibleCoord().y(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
-		
-		for(int i = 0; i < spikes.size(); i++) {
-			spikes.get(i).draw(gc);
-		}
-	}
-	
 	public ArrayList<Spike> spikes() {
 		return spikes;
 	}

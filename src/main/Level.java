@@ -14,9 +14,7 @@ public class Level {
 	private Vector coord = new Vector(0, 0);
 	private Vector length = new Vector(1000, 850);
 	private Vector spawnPoint = new Vector(0, 0);
-	private ArrayList<Brick> bricks = new ArrayList<>();
-	private ArrayList<Flat> flats = new ArrayList<>(); 
-	private ArrayList<Crystal> crystals = new ArrayList<>(); 
+	private ArrayList<MapObject> mapObjects = new ArrayList<>();
 	private int[] connection = new int[4];
 
 	public Level(int level){
@@ -52,13 +50,19 @@ public class Level {
 					double y = Double.parseDouble(fields[2]);
 					Brick brick = new Brick(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y), Double.parseDouble(fields[3]), Double.parseDouble(fields[4]));
 					brick.addSpike(line);
-					this.bricks().add(brick);	
+					this.mapObjects().add(brick);
+				}
+				else if(fields[0].equals("flat")){
+					double x = Double.parseDouble(fields[1]);
+					double y = Double.parseDouble(fields[2]);
+					Flat flat = new Flat(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y), Double.parseDouble(fields[3]));
+					this.mapObjects().add(flat);
 				}
 				else if(fields[0].equals("crystal")){
 					double x = Double.parseDouble(fields[1]);
 					double y = Double.parseDouble(fields[2]);
 					Crystal crystal = new Crystal(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y));
-					this.crystals().add(crystal);
+					this.mapObjects().add(crystal);
 				}
 				else if(fields[0].equals("right")){
 					int level = Integer.parseInt(fields[1]);
@@ -89,65 +93,61 @@ public class Level {
 	}
 
 	public void moveHorizontally(double speed) {
-		for(int i = 0; i < bricks().size(); i++) {
-			bricks().get(i).visibleCoord().setX(bricks().get(i).visibleCoord().x() + speed);
-			for(int j = 0; j < bricks().get(i).spikes().size(); j++) {
-				bricks().get(i).spikes().get(j).visibleCoord().setX(bricks().get(i).spikes().get(j).visibleCoord().x() + speed);
+		for(int i = 0; i < this.mapObjects().size(); i++) {
+			this.mapObjects().get(i).visibleCoord().setX(this.mapObjects().get(i).visibleCoord().x() + speed);
+			if(this.mapObjects().get(i) instanceof Brick) {
+				Brick brick = (Brick) this.mapObjects().get(i);
+				for(int j = 0; j < brick.spikes().size(); j++) {
+					brick.spikes().get(j).visibleCoord().setX(brick.spikes().get(j).visibleCoord().x() + speed);
+				}
 			}
-		}
-		
-		for(int i = 0; i < crystals().size(); i++) {
-			crystals().get(i).visibleCoord().setX(crystals().get(i).visibleCoord().x() + speed);
 		}
 	}
 
 	public void moveVertically(double speed) {
-		for(int i = 0; i < bricks().size(); i++) {
-			bricks().get(i).visibleCoord().setY(bricks().get(i).visibleCoord().y() + speed);
-			for(int j = 0; j < bricks().get(i).spikes().size(); j++) {
-				bricks().get(i).spikes().get(j).visibleCoord().setY(bricks().get(i).spikes().get(j).visibleCoord().y() + speed);
+		for(int i = 0; i < this.mapObjects().size(); i++) {
+			this.mapObjects().get(i).visibleCoord().setY(this.mapObjects().get(i).visibleCoord().y() + speed);
+			if(this.mapObjects().get(i) instanceof Brick) {
+				Brick brick = (Brick) this.mapObjects().get(i);
+				for(int j = 0; j < brick.spikes().size(); j++) {
+					brick.spikes().get(j).visibleCoord().setY(brick.spikes().get(j).visibleCoord().y() + speed);
+				}
 			}
 		}
-		
-		for(int i = 0; i < crystals().size(); i++) {
-			crystals().get(i).visibleCoord().setY(crystals().get(i).visibleCoord().y() + speed);
-		}
 	}
-	
+
 	public void resetVertically() {
-		for(int i = 0; i < this.bricks().size(); i++) {
-			this.bricks().get(i).visibleCoord().setY(this.bricks().get(i).coord().y() - this.coord().y());
-			for(int j = 0; j < this.bricks().get(i).spikes().size(); j++) {
-				this.bricks().get(i).spikes().get(j).visibleCoord().setY(this.bricks().get(i).spikes().get(j).coord().y() - this.coord().y());
+		for(int i = 0; i < this.mapObjects().size(); i++) {
+			this.mapObjects().get(i).visibleCoord().setY(this.mapObjects().get(i).coord().y() - this.coord().y());
+			if(mapObjects().get(i) instanceof Brick) {
+				Brick brick = (Brick) mapObjects().get(i);
+				for(int j = 0; j < brick.spikes().size(); j++) {
+					brick.spikes().get(j).visibleCoord().setY(brick.spikes().get(j).coord().y() - this.coord().y());
+				}
 			}
 		}
-		
-		for(int i = 0; i < this.crystals().size(); i++) {
-			this.crystals().get(i).visibleCoord().setY(this.crystals().get(i).coord().y() - this.coord().y());
-		}
 	}
-	
+
 	public void resetHorizontally() {
-		for(int i = 0; i < this.bricks().size(); i++) {
-			this.bricks().get(i).visibleCoord().setX(this.bricks().get(i).coord().x() - this.coord().x());
-			for(int j = 0; j < this.bricks().get(i).spikes().size(); j++) {
-				this.bricks().get(i).spikes().get(j).visibleCoord().setX(this.bricks().get(i).spikes().get(j).coord().x() - this.coord().x());
+		for(int i = 0; i < this.mapObjects().size(); i++) {
+			this.mapObjects().get(i).visibleCoord().setY(this.mapObjects().get(i).coord().y() - this.coord().y());
+			if(mapObjects().get(i) instanceof Brick) {
+				Brick brick = (Brick) mapObjects().get(i);
+				for(int j = 0; j < brick.spikes().size(); j++) {
+					brick.spikes().get(j).visibleCoord().setY(brick.spikes().get(j).coord().y() - this.coord().y());
+				}
 			}
 		}
-		
-		for(int i = 0; i < this.crystals().size(); i++) {
-			this.crystals().get(i).visibleCoord().setX(this.crystals().get(i).coord().x() - this.coord().x());
-		}
 	}
-	
+
 	public void nextHorizontalLevel(Watermelon character) {
 		this.resetVertically();
 		character.deltaCoord().setY(character.coord().y());
-		
+
 		Level newLevel = Map.levels().get(Map.currentLevel());
-		
+
 		character.coord().setX(character.coord().x() + (50 * character.moving()[0]));
-		
+
 		if(character.coord().y() - newLevel.coord().y() >= newLevel.length().y() - 275) {
 			newLevel.moveVertically(550 - newLevel.length().y());
 		}
@@ -157,15 +157,15 @@ public class Level {
 			character.visibleCoord().setY(275);
 		}
 	}
-	
+
 	public void nextVerticalLevel(Watermelon character) {
 		this.resetHorizontally();
 		character.deltaCoord().setX(character.coord().x());
-		
+
 		Level newLevel = Map.levels().get(Map.currentLevel());
-		
+
 		character.coord().setY(character.coord().y() + (100 * character.moving()[1]));
-		
+
 		if(character.coord().x() - newLevel.coord().x() >= newLevel.length().x() - 425) {
 			newLevel.moveVertically(850 - newLevel.length().y());
 		}
@@ -177,12 +177,6 @@ public class Level {
 	}
 
 
-	public ArrayList<Brick> bricks() {
-		return bricks;
-	}
-	public void setBricks(ArrayList<Brick> bricks) {
-		this.bricks = bricks;
-	}
 	public Vector coord() {
 		return coord;
 	}
@@ -219,19 +213,11 @@ public class Level {
 		this.spawnPoint = spawnPoint;
 	}
 
-	public ArrayList<Crystal> crystals() {
-		return crystals;
+	public ArrayList<MapObject> mapObjects() {
+		return mapObjects;
 	}
 
-	public void setCrystals(ArrayList<Crystal> crystals) {
-		this.crystals = crystals;
-	}
-
-	public ArrayList<Flat> flats() {
-		return flats;
-	}
-
-	public void setFlats(ArrayList<Flat> flats) {
-		this.flats = flats;
+	public void setMapObjects(ArrayList<MapObject> mapObjects) {
+		this.mapObjects = mapObjects;
 	}
 }

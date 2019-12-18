@@ -113,7 +113,7 @@ public class OnKeyPressed implements EventHandler<KeyEvent>{
 			character.climb().setGrab(true);
 		}
 		if(key.getCode() == KeyCode.H) {
-			System.out.println(Map.levels().get(0).bricks().get(0).visibleCoord().x() + Map.levels().get(0).bricks().get(0).width() - character.visibleCoord().x());
+			System.out.println(Map.levels().get(0).mapObjects().get(0).visibleCoord().y() - Map.levels().get(0).mapObjects().get(0).coord().y());
 		}
 	}
 }
