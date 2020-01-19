@@ -4,8 +4,8 @@ import main.Timer;
 
 public class Dash {
 	
-	private boolean canDash = true;
-	private Timer dashDuration = new Timer(11);
+	private boolean canDash = true; // can the player dash
+	private Timer dashDuration = new Timer(11); // the duration of a dash
 	
 	public boolean canDash() {
 		return canDash;

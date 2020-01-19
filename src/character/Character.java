@@ -3,27 +3,19 @@ package character;
 import main.Vector;
 
 public class Character {
-	private Vector coord = new Vector(0,0);
-	private Vector changeHitBox = new Vector(0,0);
-	private Vector visibleCoord = new Vector(0,0);
-	private Vector speed = new Vector(0,0);
-	private int[] moving = {0,0};
-	private double width;
-	private double height;
-	private CharacterAnimation animation = new CharacterAnimation();
-	
+	private Vector coord; // the characters coordinates that will determine his position in the game
+ 	private Vector visibleCoord = new Vector(0,0); // the characters coordinates that will determine his position on screen
+	private Vector speed = new Vector(0,0); // character speed
+	private int[] moving = {0,0}; // will be used to keep track of which direction the character is facing
+	private double width; // character width
+	private double height; // character height
+	private CharacterAnimation animation = new CharacterAnimation(); // character animation
 	
 	public Vector coord() {
 		return coord;
 	}
 	public void setCoord(Vector coord) {
 		this.coord = coord;
-	}
-	public Vector changeHitBox() {
-		return changeHitBox;
-	}
-	public void setChangeHitBox(Vector changeHitBox) {
-		this.changeHitBox = changeHitBox;
 	}
 	public Vector visibleCoord() {
 		return visibleCoord;

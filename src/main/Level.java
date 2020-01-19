@@ -10,29 +10,28 @@ import character.Watermelon;
 import map.*;
 
 public class Level {
-	private int index;
-	private Vector coord = new Vector(0, 0);
-	private Vector length = new Vector(1000, 850);
-	private Vector spawnPoint = new Vector(0, 0);
-	private ArrayList<MapObject> mapObjects = new ArrayList<>();
-	private int[] connection = new int[4];
+	private int index; // used for connecting levels
+	private Vector coord = new Vector(0, 0); // coordinates of the top right of a level
+	private Vector length = new Vector(1000, 850); // the length of a level
+	private Vector spawnPoint = new Vector(0, 0); // where the character will spawn in relation to the levels coordinates
+	private ArrayList<MapObject> mapObjects = new ArrayList<>(); // All the levels map objects
+	private int[] connection = new int[4]; // connections to the levels connecting to the right, left, up or down part of the level
 
 	public Level(int level){
-		this.setIndex(level);
+		this.setIndex(level); // this is the levels index
 		try {
-			BufferedReader fileReader = new BufferedReader(new FileReader("resources/Levels/Level" + level + ".txt"));
-			createLevel(fileReader);
+			BufferedReader fileReader = new BufferedReader(new FileReader("resources/Levels/Level" + level + ".txt")); // this will find the level file to read
+			createLevel(fileReader); // create the level
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public void createLevel(BufferedReader br){
-		String line;
+		String line; // is a line in a code
 		try {
-			while((line = br.readLine()) != null){
-				String[] fields = line.split(" ");
+			while((line = br.readLine()) != null){ // while there is a line to read
+				String[] fields = line.split(" "); // spite the information by a space so that we get a command and the parameters for that command
 				if(fields[0].equals("coord")){
 					this.coord().setX(Double.parseDouble(fields[1]));
 					this.coord().setY(Double.parseDouble(fields[2]));		
@@ -48,41 +47,41 @@ public class Level {
 				else if(fields[0].equals("brick")){
 					double x = Double.parseDouble(fields[1]);
 					double y = Double.parseDouble(fields[2]);
-					Brick brick = new Brick(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y), Double.parseDouble(fields[3]), Double.parseDouble(fields[4]));
-					brick.addSpike(line);
-					this.mapObjects().add(brick);
+					Brick brick = new Brick(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y), Double.parseDouble(fields[3]), Double.parseDouble(fields[4])); // create a brick
+					brick.addSpike(line); // this will create the spikes along the brick
+					this.mapObjects().add(brick); // add the brick
 				}
 				else if(fields[0].equals("flat")){
 					double x = Double.parseDouble(fields[1]);
 					double y = Double.parseDouble(fields[2]);
-					Flat flat = new Flat(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y), Double.parseDouble(fields[3]));
-					this.mapObjects().add(flat);
+					Flat flat = new Flat(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y), Double.parseDouble(fields[3])); // create a flat 
+					this.mapObjects().add(flat); // add the flat
 				}
 				else if(fields[0].equals("crystal")){
 					double x = Double.parseDouble(fields[1]);
 					double y = Double.parseDouble(fields[2]);
-					Crystal crystal = new Crystal(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y));
-					this.mapObjects().add(crystal);
+					Crystal crystal = new Crystal(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y)); // create a crystal
+					this.mapObjects().add(crystal); // add the flat
 				}
-				else if(fields[0].equals("right")){
+				else if(fields[0].equals("right")){ // if there is a lever to the right 
 					int level = Integer.parseInt(fields[1]);
-					Map.levels().get(level - 1).connection()[3] = this.index();
-					this.connection()[1] = level;
+					Map.levels().get(level - 1).connection()[3] = this.index(); // this will set the the level to the right of this one to have this level as its index for the left field
+					this.connection()[1] = level; // connect this level to the right one
 				}
 				else if(fields[0].equals("left")){
 					int level = Integer.parseInt(fields[1]);
-					Map.levels().get(level - 1).connection()[1] = this.index();
-					this.connection()[3] = level;
+					Map.levels().get(level - 1).connection()[1] = this.index(); // this will set the the level to the left of this one to have this level as its index for the right field
+					this.connection()[3] = level; // connect this level to the left one
 				}
 				else if(fields[0].equals("down")){
 					int level = Integer.parseInt(fields[1]);
-					Map.levels().get(level - 1).connection()[0] = this.index();
-					this.connection()[2] = level;
+					Map.levels().get(level - 1).connection()[0] = this.index();  // this will set the the level below it to have this level as its index for the up field
+					this.connection()[2] = level; // connect this level to the one below it
 				}
 				else if(fields[0].equals("up")){
 					int level = Integer.parseInt(fields[1]);
-					Map.levels().get(level - 1).connection()[2] = this.index();
-					this.connection()[0] = level;
+					Map.levels().get(level - 1).connection()[2] = this.index(); // this will set the the level ubove it to have this level as its index for the down field
+					this.connection()[0] = level; // connect this level to the one above it
 				}
 			}
 		} 
@@ -130,6 +129,30 @@ public class Level {
 
 	public void resetHorizontally() {
 		for(int i = 0; i < this.mapObjects().size(); i++) {
+			this.mapObjects().get(i).visibleCoord().setX(this.mapObjects().get(i).coord().x() - this.coord().x());
+			if(mapObjects().get(i) instanceof Brick) {
+				Brick brick = (Brick) mapObjects().get(i);
+				for(int j = 0; j < brick.spikes().size(); j++) {
+					brick.spikes().get(j).visibleCoord().setX(brick.spikes().get(j).coord().x() - this.coord().x());
+				}
+			}
+		}
+	}
+
+	public void nextLevel(Watermelon character) {
+		Map.updateLevel();
+		
+		for(int i = 0; i < this.mapObjects().size(); i++) {
+			this.mapObjects().get(i).visibleCoord().setX(this.mapObjects().get(i).coord().x() - this.coord().x());
+			if(mapObjects().get(i) instanceof Brick) {
+				Brick brick = (Brick) mapObjects().get(i);
+				for(int j = 0; j < brick.spikes().size(); j++) {
+					brick.spikes().get(j).visibleCoord().setX(brick.spikes().get(j).coord().x() - this.coord().x());
+				}
+			}
+		}
+		
+		for(int i = 0; i < this.mapObjects().size(); i++) {
 			this.mapObjects().get(i).visibleCoord().setY(this.mapObjects().get(i).coord().y() - this.coord().y());
 			if(mapObjects().get(i) instanceof Brick) {
 				Brick brick = (Brick) mapObjects().get(i);
@@ -138,15 +161,8 @@ public class Level {
 				}
 			}
 		}
-	}
-
-	public void nextHorizontalLevel(Watermelon character) {
-		this.resetVertically();
-		character.deltaCoord().setY(character.coord().y());
-
+		
 		Level newLevel = Map.levels().get(Map.currentLevel());
-
-		character.coord().setX(character.coord().x() + (50 * character.moving()[0]));
 
 		if(character.coord().y() - newLevel.coord().y() >= newLevel.length().y() - 275) {
 			newLevel.moveVertically(550 - newLevel.length().y());
@@ -156,23 +172,14 @@ public class Level {
 			newLevel.moveVertically(((newLevel.coord().y() + 275) - (character.coord().y())));
 			character.visibleCoord().setY(275);
 		}
-	}
-
-	public void nextVerticalLevel(Watermelon character) {
-		this.resetHorizontally();
-		character.deltaCoord().setX(character.coord().x());
-
-		Level newLevel = Map.levels().get(Map.currentLevel());
-
-		character.coord().setY(character.coord().y() + (100 * character.moving()[1]));
-
+		
 		if(character.coord().x() - newLevel.coord().x() >= newLevel.length().x() - 425) {
-			newLevel.moveVertically(850 - newLevel.length().y());
+			newLevel.moveHorizontally(850 - newLevel.length().x());
 		}
 		else if(character.coord().x() - newLevel.coord().x() > 425
 				&& character.coord().x() - newLevel.coord().x() < newLevel.length().x() - 425){
-			newLevel.moveVertically(((newLevel.coord().x() + 425) - (character.coord().x())));
-			character.visibleCoord().setY(425);
+			newLevel.moveHorizontally(((newLevel.coord().x() + 425) - (character.coord().x())));
+			character.visibleCoord().setX(425);
 		}
 	}
 

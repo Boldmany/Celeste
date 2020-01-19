@@ -1,30 +1,32 @@
 package map;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
+import character.Images;
+import javafx.scene.image.Image;
 import main.Vector;
 
 
 public class MapObject {
-	private Vector coord = new Vector(0, 0);
-	private Vector visibleCoord = new Vector(0, 0);
-	private double height = 0;
-	private double width = 0;
-	private Type type;
-	
-	public MapObject(Vector coord, Vector visibleCoord, double width, double height, Type type) {
+	private Vector coord = new Vector(0, 0); // coordinates
+	private Vector visibleCoord = new Vector(0, 0); // the coordinates that will be on screen
+	private double height = 0; // the height of the object
+	private double width = 0; // the width of the object
+	private Images images = new Images(); // the image / images that will be used to represent the object
+
+	/**
+	 * The constructor will set all of the fields for a map object
+	 * @param coord
+	 * @param visibleCoord
+	 * @param width
+	 * @param height
+	 * @param imagePath
+	 */
+	public MapObject(Vector coord, Vector visibleCoord, double width, double height, String... imagePath) {
 		this.setCoord(coord);
 		this.setVisibleCoord(visibleCoord);
 		this.setWidth(width);
 		this.setHeight(height);
-		this.setType(type);
-	}
-	
-	public void draw(GraphicsContext gc, Color color) {
-		gc.setStroke(color);
-		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y(), this.visibleCoord().x() + this.width(), this.visibleCoord().y());
-		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y(), this.visibleCoord().x(), this.visibleCoord().y() + this.height());
-		gc.strokeLine(this.visibleCoord().x(), this.visibleCoord().y() + this.height(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
-		gc.strokeLine(this.visibleCoord().x() + this.width(), this.visibleCoord().y(), this.visibleCoord().x() + this.width(), this.visibleCoord().y() + this.height());
+		for(int i  = 0; i < imagePath.length; i++) {
+			this.images().images().add(new Image(imagePath[i]));
+		}
 	}
 	
 	public double height() {
@@ -42,11 +44,10 @@ public class MapObject {
 	public void setWidth(double width) {
 		this.width = width;
 	}
-	
+
 	public Vector visibleCoord() {
 		return visibleCoord;
 	}
-
 	public void setVisibleCoord(Vector visibleCoord) {
 		this.visibleCoord = visibleCoord;
 	}
@@ -59,11 +60,11 @@ public class MapObject {
 		this.coord = coord;
 	}
 
-	public Type type() {
-		return type;
+	public Images images() {
+		return images;
 	}
 
-	public void setType(Type type) {
-		this.type = type;
+	public void setImages(Images images) {
+		this.images = images;
 	}
 }

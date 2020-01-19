@@ -3,12 +3,12 @@ package character;
 import main.Timer;
 
 public class Climb {
-	private boolean grab = false;
-	private boolean climbing = false;
-	private boolean canClimb = false;
-	private boolean collision = false;
-	private int energy = 11;
-	private Timer tired = new Timer(50);
+	private boolean grab = false; // if the player is grabbing / wants to climb
+	private boolean climbing = false; // if the character is climbing
+	private boolean canClimb = false; // if the character can climb
+	private boolean collision = false; // if the character is colliding with can be climbed
+	private int energy = 11; // how much climbing energy the character has
+	private Timer tired = new Timer(50); // this will be used to decrease the players energy based on how long the character has been holding to a wall
 	
 	public boolean grab() {
 		return grab;

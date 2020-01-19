@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 
 public class Images {
-	private ArrayList<Image> images = new ArrayList<Image>();
+	private ArrayList<Image> images = new ArrayList<Image>(); // a useful arraylist of images
 
 	public ArrayList<Image> images() {
 		return images;

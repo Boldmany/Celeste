@@ -1,10 +1,11 @@
 package main;
 
 public class Timer {
-	private int[] frames = {0,0};
-	private boolean complete = true;
+	private int[] frames = {0,0}; // the first index will be the frame you are at and the second index will be the frame you want to reach
+	private boolean complete = true; // if the first index equals the second
+	
 	/**
-	 * this is the constructor that will set the amount of frames for a delay
+	 * This is the constructor that will set the amount of frames for a delay
 	 * @param dur duration of the delay
 	 */
 	public Timer(int duration) {
@@ -13,7 +14,7 @@ public class Timer {
 	}
 	
 	/**
-	 * this will check for if the delay is over or not
+	 * This will check for if the delay is over or not
 	 * @return 
 	 * @return if its done or not
 	 */
@@ -46,8 +47,8 @@ public class Timer {
 	
 	public void setComplete(boolean complete) {
 		this.complete = complete;
-		if(complete) {
-			frames()[0] = frames()[1];
+		if(complete) { // if complete is being set to true
+			frames()[0] = frames()[1]; // make the frames equal
 		}
 	}
 }

@@ -1,11 +1,11 @@
 package main;
 
 public class Vector {
-	private double x;
-	private double y;
+	private double x; // x
+	private double y; // y
 	
 	/**
-	 * this a x and y component vector
+	 * This a x and y component vector
 	 * @param x component of the vector
 	 * @param y component of the vector
 	 */

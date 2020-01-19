@@ -1,5 +1,37 @@
-coord 1000 300
-length 1000 850
-spawnPoint 0 0 
-brick 000 200 400 100 right left
-left 1
+coord 350 -1000
+length 1250 1000
+spawnPoint 100 950
+flat 0 1000 200
+down 1
+brick 70 700 50 50 right up left down
+brick 110 590 50 50 right up left down
+brick 160 470 50 50 right up left down
+brick -40 -50 250 50 down 
+brick 350 1000 900 50 up
+brick -50 0 50 1000 right
+brick 200 800 100 200 right
+crystal 580 610
+brick 840 640 100 50 down
+brick 940 390 100 300 right
+brick 300 900 50 100 up right 
+brick 450 900 50 100 up right left
+brick 500 950 100 50 up right
+brick 840 690 50 350 right left
+brick 940 240 100 50 up right
+brick 1040 240 50 800 right
+brick 1040 -10 50 250 right left
+brick 740 190 200 50 down left
+brick 940 190 50 50 right
+crystal 645 300
+brick 350 400 550 50 up down left right 
+brick 350 300 50 100 left 
+brick 740 140 50 50 right up 
+brick 690 140 50 50 down left
+brick 690 90 50 50 right up
+brick 640 90 50 50 down left
+brick 640 40 50 50 right up
+brick 590 40 50 50 down left
+brick 590 -10 50 50 right up left
+brick 210 0 50 200 down left right
+brick 460 0 50 200 down right left
+flat 260 150 200
