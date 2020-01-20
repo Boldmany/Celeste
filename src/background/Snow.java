@@ -22,6 +22,9 @@ public class Snow {
 		this.setRadius(radius);
 	}
 	
+	/**
+	 * Dictates the motion of snow particles
+	 */
 	public void move(){
 		this.coord().setX(this.speed().x() + this.coord().x()); // moves the x coordinate
 		this.coord().setY(this.speed().y() + this.coord().y()); // moves the y coordinate
@@ -32,6 +35,9 @@ public class Snow {
 		}
 	}
 	
+	/**
+	 * Creates a new snow particle
+	 */
 	public static void createSnow(){
 		int side = (int) (Math.random() + 0.5); // randomized side or top spawn point 
 		int radius = (int) (Math.random() * 4 + 2); // random radius

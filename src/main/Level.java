@@ -27,6 +27,10 @@ public class Level {
 		}
 	}
 
+	/**
+	 * Reades a file to generate map objects
+	 * @param br
+	 */
 	public void createLevel(BufferedReader br){
 		String line; // is a line in a code
 		try {
@@ -61,7 +65,7 @@ public class Level {
 					double x = Double.parseDouble(fields[1]);
 					double y = Double.parseDouble(fields[2]);
 					Crystal crystal = new Crystal(new Vector(x + this.coord().x(), y + this.coord().y()), new Vector(x, y)); // create a crystal
-					this.mapObjects().add(crystal); // add the flat
+					this.mapObjects().add(crystal); // add the crystal
 				}
 				else if(fields[0].equals("right")){ // if there is a lever to the right 
 					int level = Integer.parseInt(fields[1]);
@@ -91,8 +95,13 @@ public class Level {
 		}
 	}
 
+	/**
+	 * Shifts every map object horizontally
+	 * @param speed
+	 */
 	public void moveHorizontally(double speed) {
-		for(int i = 0; i < this.mapObjects().size(); i++) {
+		// moves all the map objects by a set speed
+		for(int i = 0; i < this.mapObjects().size(); i++) { 
 			this.mapObjects().get(i).visibleCoord().setX(this.mapObjects().get(i).visibleCoord().x() + speed);
 			if(this.mapObjects().get(i) instanceof Brick) {
 				Brick brick = (Brick) this.mapObjects().get(i);
@@ -103,7 +112,12 @@ public class Level {
 		}
 	}
 
+	/**
+	 * Shifts every map object vertically
+	 * @param speed
+	 */
 	public void moveVertically(double speed) {
+		// moves all the map objects by a set speed
 		for(int i = 0; i < this.mapObjects().size(); i++) {
 			this.mapObjects().get(i).visibleCoord().setY(this.mapObjects().get(i).visibleCoord().y() + speed);
 			if(this.mapObjects().get(i) instanceof Brick) {
@@ -114,35 +128,16 @@ public class Level {
 			}
 		}
 	}
-
-	public void resetVertically() {
-		for(int i = 0; i < this.mapObjects().size(); i++) {
-			this.mapObjects().get(i).visibleCoord().setY(this.mapObjects().get(i).coord().y() - this.coord().y());
-			if(mapObjects().get(i) instanceof Brick) {
-				Brick brick = (Brick) mapObjects().get(i);
-				for(int j = 0; j < brick.spikes().size(); j++) {
-					brick.spikes().get(j).visibleCoord().setY(brick.spikes().get(j).coord().y() - this.coord().y());
-				}
-			}
-		}
-	}
-
-	public void resetHorizontally() {
-		for(int i = 0; i < this.mapObjects().size(); i++) {
-			this.mapObjects().get(i).visibleCoord().setX(this.mapObjects().get(i).coord().x() - this.coord().x());
-			if(mapObjects().get(i) instanceof Brick) {
-				Brick brick = (Brick) mapObjects().get(i);
-				for(int j = 0; j < brick.spikes().size(); j++) {
-					brick.spikes().get(j).visibleCoord().setX(brick.spikes().get(j).coord().x() - this.coord().x());
-				}
-			}
-		}
-	}
-
+	
+	/**
+	 * Resets the map so that the character is aligned with the map
+	 * @param character
+	 */
 	public void nextLevel(Watermelon character) {
-		Map.updateLevel();
+		Map.updateLevel(); // Updates the file that stores the current level
 		
-		for(int i = 0; i < this.mapObjects().size(); i++) {
+		// moves all the map objects back to their original positions
+		for(int i = 0; i < this.mapObjects().size(); i++) { 
 			this.mapObjects().get(i).visibleCoord().setX(this.mapObjects().get(i).coord().x() - this.coord().x());
 			if(mapObjects().get(i) instanceof Brick) {
 				Brick brick = (Brick) mapObjects().get(i);
@@ -151,7 +146,6 @@ public class Level {
 				}
 			}
 		}
-		
 		for(int i = 0; i < this.mapObjects().size(); i++) {
 			this.mapObjects().get(i).visibleCoord().setY(this.mapObjects().get(i).coord().y() - this.coord().y());
 			if(mapObjects().get(i) instanceof Brick) {
@@ -162,24 +156,25 @@ public class Level {
 			}
 		}
 		
-		Level newLevel = Map.levels().get(Map.currentLevel());
+		Level newLevel = Map.levels().get(Map.currentLevel()); // temporary variable
 
-		if(character.coord().y() - newLevel.coord().y() >= newLevel.length().y() - 275) {
-			newLevel.moveVertically(550 - newLevel.length().y());
+		// update the visible coordinates of the map objects based on the way the character enters the level
+		if(character.coord().y() - newLevel.coord().y() >= newLevel.length().y() - 275) { // if the character is at the top of the level
+			newLevel.moveVertically(550 - newLevel.length().y()); // move all the objects down
 		}
 		else if(character.coord().y() - newLevel.coord().y() > 275 
-				&& character.coord().y() - newLevel.coord().y() < newLevel.length().y() - 275){
-			newLevel.moveVertically(((newLevel.coord().y() + 275) - (character.coord().y())));
-			character.visibleCoord().setY(275);
+				&& character.coord().y() - newLevel.coord().y() < newLevel.length().y() - 275) { // if the player is in the side scroller
+			newLevel.moveVertically(((newLevel.coord().y() + 275) - (character.coord().y()))); // move the level up according to the players current possition
+			character.visibleCoord().setY(275); // set the characters visible coordinates to the center of screen
 		}
 		
-		if(character.coord().x() - newLevel.coord().x() >= newLevel.length().x() - 425) {
-			newLevel.moveHorizontally(850 - newLevel.length().x());
+		if(character.coord().x() - newLevel.coord().x() >= newLevel.length().x() - 425) { // if the player is all the way to the right of the level
+			newLevel.moveHorizontally(850 - newLevel.length().x()); // move all the map objects to the left
 		}
 		else if(character.coord().x() - newLevel.coord().x() > 425
-				&& character.coord().x() - newLevel.coord().x() < newLevel.length().x() - 425){
-			newLevel.moveHorizontally(((newLevel.coord().x() + 425) - (character.coord().x())));
-			character.visibleCoord().setX(425);
+				&& character.coord().x() - newLevel.coord().x() < newLevel.length().x() - 425) { // if the character is in the side scroller
+			newLevel.moveHorizontally(((newLevel.coord().x() + 425) - (character.coord().x()))); // move all the objects to the left according to the players current possition
+			character.visibleCoord().setX(425); // set the characters visible coordinates to the center of screen
 		}
 	}
 

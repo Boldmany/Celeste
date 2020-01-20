@@ -60,6 +60,9 @@ public class Watermelon extends Character{
 		level.nextLevel(Map.watermelon());
 	}
 	
+	/**
+	 * Updates the character's coordinates
+	 */
 	public void move() {
 		if(this.finishedDashing() && !this.climb().climbing()) { // if the player is not in dash motion
 			if(!this.climb().canClimb()) { // if the player cant climb
@@ -200,6 +203,11 @@ public class Watermelon extends Character{
 		return speed;
 	}
 
+	/**
+	 * Accelerates the player downwards
+	 * @param speed
+	 * @return
+	 */
 	public double gravity(double speed) {
 		final int TERMINAL_SPEED = 9; // max falling speed
 
@@ -213,6 +221,10 @@ public class Watermelon extends Character{
 		return speed;
 	}
 
+	/**
+	 * Checks for if the character has finished dashing
+	 * @return
+	 */
 	public boolean finishedDashing() {
 
 		if(!this.dash().dashDuration().complete()) { // if not completed dash
